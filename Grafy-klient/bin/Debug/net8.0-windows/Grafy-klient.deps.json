@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Grafy-klient/1.0.0": {
+        "runtime": {
+          "Grafy-klient.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Grafy-klient/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
