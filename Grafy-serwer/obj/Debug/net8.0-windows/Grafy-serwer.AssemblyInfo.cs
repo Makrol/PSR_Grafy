@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Grafy-serwer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2d3ad004a4e9104f96edf271c8e83786ac8d1b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4467c8f9317fe45662b751131ce26ac625346e0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Grafy-serwer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Grafy-serwer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

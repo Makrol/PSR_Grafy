@@ -5,10 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Grafy_serwer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="303">
+        Title="MainWindow" Height="500" Width="854">
     <Grid>
-        <Button x:Name="startButton" Content="Start server" HorizontalAlignment="Center" Margin="0,191,0,0" VerticalAlignment="Top" Height="84" Width="165" Click="Button_Click"/>
-        <TextBlock x:Name="counterTextBlock" HorizontalAlignment="Center" Margin="0,89,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="91*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="canva" Background="#D9D9D9" Grid.Column="0"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Grid.Row="0">
+                <TextBlock Style="{StaticResource CustomTextBlockHeader}" Text="Sekcja edycji grafu" />
+                <Button Style="{StaticResource ButtonStyle}" Content="Dodawanie węzłów" Click="Button_Click_Add_Node" x:Name="addNode"/>
+                <Button Style="{StaticResource ButtonStyle}" Content="Dodawanie ścieżek" Click="Button_Click_Add_Enge"  x:Name="addEdge"/>
+                
 
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <Rectangle Style="{StaticResource OutgoingLine}"/>
+
+                <TextBlock Style="{StaticResource CustomTextBlockHeader}" Text="Sekcja tworzenia grafu"/>
+                <Button  Style="{StaticResource ButtonStyle}" Content="Generuj graf"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <Rectangle Style="{StaticResource OutgoingLine}"/>
+                <TextBlock Style="{StaticResource CustomTextBlockHeader}" Text="Sekcja obliczeń"/>
+                <Button Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
