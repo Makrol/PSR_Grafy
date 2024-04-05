@@ -37,6 +37,8 @@ namespace Grafy_serwer
                 }
                 Debug.WriteLine("");
             }
+            Dijkstra.determineSolution(matrix, 0, size);
+
         }
         private List<int> findConnectedNodes(Node currentNode,int currentNodeIndex, List<Node> nodes)
         {
