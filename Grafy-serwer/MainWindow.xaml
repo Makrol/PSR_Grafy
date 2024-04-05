@@ -37,7 +37,7 @@
             <StackPanel Grid.Row="2">
                 <Rectangle Style="{StaticResource OutgoingLine}"/>
                 <TextBlock Style="{StaticResource CustomTextBlockHeader}" Text="Sekcja obliczeń"/>
-                <Button Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia"/>
+                <Button Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia" Click="Start_Calculations"/>
             </StackPanel>
         </Grid>
     </Grid>
