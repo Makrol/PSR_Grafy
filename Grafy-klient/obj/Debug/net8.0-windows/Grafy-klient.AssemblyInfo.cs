@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Grafy-klient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4467c8f9317fe45662b751131ce26ac625346e0e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8254695bb2b34f0cb9b1d3e3eb0b48d6164c240a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Grafy-klient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Grafy-klient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

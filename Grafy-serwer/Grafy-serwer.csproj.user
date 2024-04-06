@@ -7,7 +7,45 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Pages\ClientPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ConnectionPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\GraphEditorPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ServerPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Window1.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\WelcomePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ClientPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ConnectionPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\GraphEditorPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ServerPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Window1.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\WelcomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

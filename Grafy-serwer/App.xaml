@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Grafy_serwer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
         <Style x:Key="CustomTextBlockHeader" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#898989"/>
@@ -39,6 +40,25 @@
             <Setter Property="RadiusX" Value="2"/>
             <Setter Property="RadiusY" Value="2"/>
             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
