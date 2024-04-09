@@ -15,6 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections;
+using System.Text.Json;
+using System.Diagnostics;
 
 namespace Grafy_serwer.Pages
 {
@@ -95,10 +98,29 @@ namespace Grafy_serwer.Pages
 
                     while (true)
                     {
+                        ReturnObject returnObject = new ReturnObject();
                         Dispatcher.Invoke(()=> { clientStstus.Text = "Status: oczekuje na zadanie"; });
-                        byte[] responseData = new byte[3024];
-                        int bytesRead = stream.Read(responseData, 0, responseData.Length);
+                        byte[] tmpResponseData = new byte[3024];
+                        int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
+                        returnObject.beginTime = DateTime.Now;
+                        byte[] responseData = new byte[bytesRead];
+                        Array.Copy(tmpResponseData, responseData, bytesRead);
+                        SendObject recievedObject = JsonSerializer.Deserialize<SendObject>(responseData);
+                        if (recievedObject == null)
+                            continue;
                         MessageBox.Show("KLient otrzymał pakiet danych", "Otrzymano dane", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Dispatcher.Invoke(() => { clientStstus.Text = "Status: wykonuje obliczenia"; });
+
+                        returnObject.beginTime = DateTime.Now;
+                        foreach (var index in recievedObject.nodeIndexes)
+                        {
+                            returnObject.results.Add(Dijkstra.determineSolution(recievedObject.matrix, index,recievedObject.matrix.Count));
+                        }
+                        returnObject.endTime = DateTime.Now;
+
+                        //zwracanie do serwera
+                        var tmpData = JsonSerializer.Serialize(returnObject);
+                        stream.Write(Encoding.UTF8.GetBytes(tmpData));
 
                     }
                 }
@@ -117,7 +139,9 @@ namespace Grafy_serwer.Pages
                 Dispatcher.Invoke(() => { clientStstus.Text = "Status: rozłączony"; });
                 Console.WriteLine("Błąd: " + ex.Message);
             }
-            tabControl.SelectedIndex = 0;
+            Dispatcher.Invoke(() => { tabControl.SelectedIndex = 0; });
+
+            
         }
     }
 }

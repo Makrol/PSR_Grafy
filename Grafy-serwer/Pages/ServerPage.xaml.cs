@@ -60,6 +60,7 @@ namespace Grafy_serwer.Pages
 
         private void CloseServer(object sender, RoutedEventArgs e)
         {
+            calculationButton.IsEnabled = true;
             try
             {
                 if (listener != null)
@@ -130,7 +131,7 @@ namespace Grafy_serwer.Pages
             clientsStreams.Add(stream);
 
             byte[] buffer = new byte[1024];
-            int bytesRead;
+            //int bytesRead;
             counter++;
             string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             int clientPort = ((IPEndPoint)client.Client.RemoteEndPoint).Port;
@@ -163,9 +164,17 @@ namespace Grafy_serwer.Pages
                     }
 
                     // Odczytaj dane od klienta
-                    bytesRead = stream.Read(buffer, 0, buffer.Length);
-                    string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine("Odebrano: " + dataReceived);
+                   // bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    //string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                    //Console.WriteLine("Odebrano: " + dataReceived);
+
+                    byte[] tmpResponseData = new byte[3024];
+                    int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
+                    byte[] responseData = new byte[bytesRead];
+                    Array.Copy(tmpResponseData, responseData, bytesRead);
+                    ReturnObject recievedObject = JsonSerializer.Deserialize<ReturnObject>(responseData);
+                    MessageBox.Show("Odebrano wyniki obliczeń od klienta w ilości "+recievedObject.results.Count, "Odebrani wyniki", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
             }
             catch (Exception ex)
@@ -242,10 +251,11 @@ namespace Grafy_serwer.Pages
             return messages;
         }
         private void sendObjectsToAll(List<SendObject> objectsList)
-        {
-            for(int i=0;i<objectsList.Count;i++)
+        {          
+            for (int i=0;i<objectsList.Count;i++)
             {
-                clientsStreams[i].Write(JsonSerializer.SerializeToUtf8Bytes(objectsList[i]));
+                var tmpData = JsonSerializer.Serialize(objectsList[i]);
+                clientsStreams[i].Write(Encoding.UTF8.GetBytes(tmpData));
             }
         }
     }

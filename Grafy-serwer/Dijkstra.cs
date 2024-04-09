@@ -11,8 +11,9 @@ namespace Grafy_serwer
     {
         private Dijkstra() { }
 
-        static public void determineSolution(int[,] graph, int sourceNodeIndex, int size)
+        static public CalculationResult determineSolution(List<List<int>> graph, int sourceNodeIndex, int size)
         {
+            DateTime begin = DateTime.Now;
             int[] distance = new int[size];
             int[] parent = new int[size]; 
 
@@ -35,15 +36,20 @@ namespace Grafy_serwer
 
                 for (int v = 0; v < size; v++)
                 {
-                    if (!shortestPathSet[v] && graph[u, v] != 0 && distance[u] != int.MaxValue && distance[u] + graph[u, v] < distance[v])
+                    if (!shortestPathSet[v] && graph[u][v] != 0 && distance[u] != int.MaxValue && distance[u] + graph[u][v] < distance[v])
                     {
-                        distance[v] = distance[u] + graph[u, v];
+                        distance[v] = distance[u] + graph[u][v];
                         parent[v] = u;
                     }
                 }
             }
+            DateTime end = DateTime.Now;
 
             PrintSolution(distance, parent, size, sourceNodeIndex);
+            CalculationResult returnObject = CreateReturnObject(distance, parent, size, sourceNodeIndex);
+            returnObject.beginCalculation = begin;
+            returnObject.endCalculations = end;
+            return returnObject;
         }
         private static int MinDistance(int[] distance, bool[] shortestPathSet,int size)
         {
@@ -60,7 +66,22 @@ namespace Grafy_serwer
 
             return minIndex;
         }
+        private static CalculationResult CreateReturnObject(int[] distance, int[] parent, int size, int sourceNodeIndex)
+        {
+            CalculationResult returnObject = new CalculationResult();
+            int sum = 0;
+            for (int i = 0; i < size; i++)
+            {
+                List<int> pathForNode = new List<int>();
+                CreatePath(parent, i,pathForNode);
+                returnObject.paths.Add(pathForNode);
+                returnObject.nodeDistances.Add(distance[i]);
+                sum += distance[i];
+            }
+            returnObject.sum = sum;
+            return returnObject;
 
+        }
         private static void PrintSolution(int[] distance, int[] parent, int size, int sourceNodeIndex)
         {
             int sum = 0;
@@ -89,6 +110,14 @@ namespace Grafy_serwer
 
             PrintPath(parent, parent[j]);
             Debug.Write(" -> " + j);
+        }
+        private static void CreatePath(int[] parent, int j,List<int> pathForNode)
+        {
+            if (parent[j] == -1)
+                return;
+
+            CreatePath(parent, parent[j], pathForNode);
+            pathForNode.Add(j);
         }
     }
 }
