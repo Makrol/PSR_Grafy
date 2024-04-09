@@ -40,8 +40,11 @@
             </ListView.View>
 
         </ListView>
-        <Border Background="#dedede" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+        <Border Background="#dedede" Grid.Column="1" Grid.Row="1" >
             <Button Style="{StaticResource ButtonStyle}" Content="Wyłącz serwer" Click="CloseServer"/>
+        </Border>
+        <Border x:Name="calculationButton" Background="#dedede" Grid.Column="0" Grid.Row="1" >
+            <Button Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia" Click="StartCalculation"/>
         </Border>
     </Grid>
 </Page>

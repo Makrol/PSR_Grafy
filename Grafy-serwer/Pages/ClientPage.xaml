@@ -18,9 +18,12 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-  
-        
-        <Border Background="#dedede" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+        <Border Background="#dedede" Grid.Column="0" Grid.Row="1">
+            <Border Background="#dedede" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="clientStstus" TextWrapping="Wrap" Text="Statyus: "/>
+            </Border>
+        </Border>
+        <Border Background="#dedede" Grid.Column="1" Grid.Row="1">
             <Button Style="{StaticResource ButtonStyle}" Content="Rozłącz" Click="Disconnect"/>
         </Border>
     </Grid>

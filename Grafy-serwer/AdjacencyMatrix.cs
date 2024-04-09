@@ -11,33 +11,41 @@ namespace Grafy_serwer
     public class AdjacencyMatrix
     {
         private int size =0;
-        private int[,] matrix;
+        public List<List<int>> matrix = new List<List<int>>();
         public AdjacencyMatrix(int size) {
-            matrix = new int[size, size];
+            for(int i=0;i<size ;i++)
+            {
+                var tmp = new List<int>();
+                for(int j=0;j<size;j++)
+                    tmp.Add(0);
+                matrix.Add(tmp);
+            }
             this.size = size;
         }
 
-        public void generateMatrix(List<Node> nodes)
+        public List<List<int>> generateMatrix(List<Node> nodes)
         {
             for(int i=0;i<nodes.Count;i++)
             {
                 var result = findConnectedNodes(nodes[i],i,nodes);
                 foreach(int index in result)
                 {
-                    matrix[i,index] = nodes[i].CalculateDistance(nodes[index]);
+                    matrix[i][index] = nodes[i].CalculateDistance(nodes[index]);
                 }
             }
-
+            
+            
             for(int j=0;j<size;j++)
             {
                 for(int k=0;k<size;k++)
                 {
-                    Debug.Write(matrix[j,k]);
+                    Debug.Write(matrix[j][k]);
                     Debug.Write(" ");
                 }
                 Debug.WriteLine("");
             }
-           // Dijkstra.determineSolution(matrix, 0, size);
+            return matrix;
+            // Dijkstra.determineSolution(matrix, 0, size);
 
         }
         private List<int> findConnectedNodes(Node currentNode,int currentNodeIndex, List<Node> nodes)

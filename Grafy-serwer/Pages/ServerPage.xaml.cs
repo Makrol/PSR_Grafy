@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Grafy_serwer.Pages
 {
@@ -27,12 +31,15 @@ namespace Grafy_serwer.Pages
     {
         private TabControl tabControl;
         public ObservableCollection<Record> Records { get; set; }
-        static TcpListener listener;
-        const int serverPort = 8888;
-        static List<Thread> clientThreads = new List<Thread>();
-        
-        int counter = 0;
+        private static TcpListener listener;
+        private const int serverPort = 8888;
+        private static List<Thread> clientThreads = new List<Thread>();
+        private int nodeInPackage =0;
+        private int nodeCounter = 0;
+        private int counter = 0;
         private Thread serverThread;
+        private List<TcpClient> clients = new List<TcpClient> ();
+        private List<NetworkStream> clientsStreams = new List<NetworkStream> ();
 
         public ServerPage()
         {
@@ -104,7 +111,7 @@ namespace Grafy_serwer.Pages
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
             finally
             {
@@ -118,7 +125,9 @@ namespace Grafy_serwer.Pages
         {
 
             TcpClient client = (TcpClient)obj;
+            clients.Add(client);
             NetworkStream stream = client.GetStream();
+            clientsStreams.Add(stream);
 
             byte[] buffer = new byte[1024];
             int bytesRead;
@@ -168,7 +177,11 @@ namespace Grafy_serwer.Pages
                 // Zamknij strumień i klienta
                 stream.Close();
                 client.Close();
-                tabControl.SelectedIndex = 0;
+                Dispatcher.Invoke(() =>
+                {
+                    tabControl.SelectedIndex = 0;
+                });
+                
             }
         }
         public class Record
@@ -176,6 +189,64 @@ namespace Grafy_serwer.Pages
             public string IPAddress { get; set; }
             public int Port { get; set; }
             public string Status { get; set; }
+        }
+
+        private void StartCalculation(object sender, RoutedEventArgs e)
+        {
+            
+            listener.Stop();
+            calculationButton.IsEnabled=false;
+            var sendableObjects = generateInitSendObjects();
+            sendObjectsToAll(sendableObjects);
+
+            
+        }
+        private List<SendObject> generateInitSendObjects()
+        {
+            var nodes = GraphEditorPage.getGrapfNodes();
+            AdjacencyMatrix matrix = new AdjacencyMatrix(nodes.Count);
+            matrix.generateMatrix(nodes);
+            List<SendObject> messages = new List<SendObject>();
+            nodeInPackage = nodes.Count / counter;
+            nodeCounter = 0;
+            for(int i=0;i<counter ;i++)
+            {
+                var tmp = new SendObject();
+                tmp.matrix = matrix.matrix;
+                for(int j=0;j<nodeInPackage;j++)
+                {
+                    if (nodeCounter > nodes.Count - 1)
+                        break;
+                    tmp.nodeIndexes.Add(nodeCounter);
+                    nodeCounter++;
+                }
+                messages.Add(tmp);
+                if((i+1)%nodeInPackage==0)
+                {
+                    continue;
+                }
+            }
+            if(nodeCounter<nodes.Count)
+            {
+                while(nodeCounter!=nodes.Count)
+                {
+                    foreach(var mess in messages)
+                    {
+                        if (nodeCounter == nodes.Count)
+                            break;
+                        mess.nodeIndexes.Add(nodeCounter);
+                        nodeCounter++;
+                    }
+                }
+            }
+            return messages;
+        }
+        private void sendObjectsToAll(List<SendObject> objectsList)
+        {
+            for(int i=0;i<objectsList.Count;i++)
+            {
+                clientsStreams[i].Write(JsonSerializer.SerializeToUtf8Bytes(objectsList[i]));
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Grafy_serwer.Pages
         private bool isNodeAdding = false;
         private bool isEdgeAdding = false;
         private List<Ellipse> selectedNodes = new List<Ellipse>();
-        private List<Node> nodes = new List<Node>();
+        private static List<Node> nodes = new List<Node>();
         private TabControl tabControl;
         public GraphEditorPage()
         {
@@ -170,6 +170,10 @@ namespace Grafy_serwer.Pages
         private void Bact(object sender, RoutedEventArgs e)
         {
             tabControl.SelectedIndex = 0;
+        }
+        public static List<Node> getGrapfNodes()
+        {
+            return nodes;
         }
     }
 }

@@ -23,9 +23,10 @@ namespace Grafy_serwer
 
     public partial class MainWindow : Window
     {
-        public TcpClient Client { get; set; }
-        public NetworkStream Stream { get; set; }
 
+
+        public string clientIp { set; get; }
+        public int clientPort {  set; get; }
         public MainWindow()
         {
             InitializeComponent();

@@ -24,9 +24,9 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBlock Padding="12" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Adres serwera"/>
-                        <TextBox x:Name="ipAddress" Style="{StaticResource TextBoxStyle}" Margin="10" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="" Width="120"/>
+                        <TextBox x:Name="ipAddress" Text="127.0.0.1" Style="{StaticResource TextBoxStyle}" Margin="10" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Width="120"/>
                         <TextBlock Padding="12" Grid.Row="1" Grid.Column="0"  TextWrapping="Wrap" Text="Port"/>
-                        <TextBox x:Name="port" Style="{StaticResource TextBoxStyle}" Margin="10" Grid.Row="1" Grid.Column="1"  TextWrapping="Wrap" Text="" Width="120"/>
+                        <TextBox x:Name="port" Style="{StaticResource TextBoxStyle}" Margin="10" Grid.Row="1" Grid.Column="1"  TextWrapping="Wrap" Text="8888" Width="120"/>
                     </Grid>
                     <Button Style="{StaticResource ButtonStyle}" Content="Połącz" Click="ConnectToServer"/>
                     <Button Style="{StaticResource ButtonStyle}" Content="Anuluj" Click="CancelConnection"/>
