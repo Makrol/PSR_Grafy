@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Grafy_serwer.Window1;
+
 
 namespace Grafy_serwer
 {

@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Grafy-serwer.csproj",
-      "projectName": "Grafy-serwer",
-      "projectPath": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Grafy-serwer.csproj",
+      "projectUniqueName": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Grafy-klient-serwer.csproj",
+      "projectName": "Grafy-klient-serwer",
+      "projectPath": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Grafy-klient-serwer.csproj",
       "packagesPath": "C:\\Users\\karol\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\obj\\",
       "projectStyle": "PackageReference",
