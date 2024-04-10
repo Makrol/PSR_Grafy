@@ -18,18 +18,26 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center" Height="174" Width="136">
-            <Border Padding="5" Background="#eeeeee" CornerRadius="5" BorderBrush="Gray" BorderThickness="1">
-                <StackPanel  HorizontalAlignment="Center"  VerticalAlignment="Center" Height="162">
-                    <TextBlock x:Name="serverport" TextAlignment="Center"  Style="{StaticResource CustomTextBlockHeader}" TextWrapping="Wrap" Text="Port"/>
-                    <TextBlock TextAlignment="Center" FontSize="17" Style="{StaticResource CustomTextBlockHeader}" TextWrapping="Wrap" Text="Ilość klientów:"/>
-                    <TextBlock x:Name="clientCounter" TextAlignment="Center" FontSize="17" Style="{StaticResource CustomTextBlockHeader}" TextWrapping="Wrap" Text="0"/>
+        <ListView x:Name="resultListView" Grid.Column="0">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn DisplayMemberBinding="{Binding ClientName}" Header="Klient" Width="125"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding RecieveDate}" Header="Odebranie" Width="125"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding BeginDate}" Header="Rozpoczęcie" Width="125"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończenie" Width="125"/>
+                    <GridViewColumn Header="Akcje" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Pokaż" Style="{StaticResource ButtonStyle}" Click="Show_record_Info" DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
 
 
-                    <StackPanel Height="100"/>
-                </StackPanel>
-            </Border>
-        </StackPanel>
         <ListView x:Name="listView" Grid.Column="1">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
@@ -43,8 +51,16 @@
         <Border Background="#dedede" Grid.Column="1" Grid.Row="1" >
             <Button Style="{StaticResource ButtonStyle}" Content="Wyłącz serwer" Click="CloseServer"/>
         </Border>
-        <Border x:Name="calculationButton" Background="#dedede" Grid.Column="0" Grid.Row="1" >
-            <Button Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia" Click="StartCalculation"/>
+        <Border  Background="#dedede" Grid.Column="0" Grid.Row="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="calculationButton" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia" Click="StartCalculation"/>
+                <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Pokaż wszystkie wyniki" Click="Show_All_Results"/>
+            </Grid>
+            
         </Border>
     </Grid>
 </Page>

@@ -49,6 +49,7 @@ namespace Grafy_serwer
             CalculationResult returnObject = CreateReturnObject(distance, parent, size, sourceNodeIndex);
             returnObject.beginCalculation = begin;
             returnObject.endCalculations = end;
+            returnObject.startNode = sourceNodeIndex;
             return returnObject;
         }
         private static int MinDistance(int[] distance, bool[] shortestPathSet,int size)

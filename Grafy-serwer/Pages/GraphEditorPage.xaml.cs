@@ -17,7 +17,7 @@ namespace Grafy_serwer.Pages
         private bool isNodeAdding = false;
         private bool isEdgeAdding = false;
         private List<Ellipse> selectedNodes = new List<Ellipse>();
-        private static List<Node> nodes = new List<Node>();
+        public static List<Node> nodes = new List<Node>();
         private TabControl tabControl;
         public GraphEditorPage()
         {
@@ -51,7 +51,7 @@ namespace Grafy_serwer.Pages
                 Canvas.SetTop(ellipse, position.Y - ellipse.Height / 2);
 
                 canva.Children.Add(ellipse);
-                nodes.Add(new Node { ellipse = ellipse });
+                nodes.Add(new Node { ellipse = ellipse,position=position });
             }
             else if (isEdgeAdding)
             {

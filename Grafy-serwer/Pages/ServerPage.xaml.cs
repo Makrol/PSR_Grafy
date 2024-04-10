@@ -1,26 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Grafy_serwer.Modals;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace Grafy_serwer.Pages
 {
@@ -30,7 +16,8 @@ namespace Grafy_serwer.Pages
     public partial class ServerPage : Page
     {
         private TabControl tabControl;
-        public ObservableCollection<Record> Records { get; set; }
+        public ObservableCollection<CliendRecord> ConnectedClientsRecords { get; set; }
+        public ObservableCollection<ResultRecord> ResultsRecords { get; set; }
         private static TcpListener listener;
         private const int serverPort = 8888;
         private static List<Thread> clientThreads = new List<Thread>();
@@ -40,12 +27,16 @@ namespace Grafy_serwer.Pages
         private Thread serverThread;
         private List<TcpClient> clients = new List<TcpClient> ();
         private List<NetworkStream> clientsStreams = new List<NetworkStream> ();
+        private List<ReturnObject> returnObjectsList = new List<ReturnObject> ();
 
         public ServerPage()
         {
             InitializeComponent();
-            Records = new ObservableCollection<Record>();
-            listView.ItemsSource = Records;
+            ConnectedClientsRecords = new ObservableCollection<CliendRecord>();
+            ResultsRecords = new ObservableCollection<ResultRecord>();
+            listView.ItemsSource = ConnectedClientsRecords;
+            resultListView.ItemsSource = ResultsRecords;
+
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -82,7 +73,7 @@ namespace Grafy_serwer.Pages
                 Console.WriteLine(ex.ToString());
             }
             tabControl.SelectedIndex = 1;
-            Records.Clear();
+            ConnectedClientsRecords.Clear();
             counter = 0;
         }
         private void StartServer()
@@ -130,15 +121,12 @@ namespace Grafy_serwer.Pages
             NetworkStream stream = client.GetStream();
             clientsStreams.Add(stream);
 
-            byte[] buffer = new byte[1024];
-            //int bytesRead;
             counter++;
             string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             int clientPort = ((IPEndPoint)client.Client.RemoteEndPoint).Port;
 
             Dispatcher.Invoke(() => {
-                clientCounter.Text = counter.ToString();
-                Records.Add(new Record { IPAddress = clientIP, Port = clientPort, Status = "aktywny" });
+                ConnectedClientsRecords.Add(new CliendRecord { IPAddress = clientIP, Port = clientPort, Status = "aktywny" });
             });
             try
             {
@@ -149,12 +137,11 @@ namespace Grafy_serwer.Pages
                     {
                         counter--;
                         Dispatcher.Invoke(() => {
-                            clientCounter.Text = counter.ToString();
-                            Record recordToRemove = Records.FirstOrDefault(record => record.IPAddress == clientIP && record.Port == clientPort);
+                            CliendRecord recordToRemove = ConnectedClientsRecords.FirstOrDefault(record => record.IPAddress == clientIP && record.Port == clientPort);
 
                             if (recordToRemove != null)
                             {
-                                Records.Remove(recordToRemove);
+                                ConnectedClientsRecords.Remove(recordToRemove);
                             }
                         });
                         MessageBox.Show("Utracono połączenie z klientem o ip "+clientIP+" i porcie "+clientPort, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -163,16 +150,21 @@ namespace Grafy_serwer.Pages
                         break;
                     }
 
-                    // Odczytaj dane od klienta
-                   // bytesRead = stream.Read(buffer, 0, buffer.Length);
-                    //string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                    //Console.WriteLine("Odebrano: " + dataReceived);
-
                     byte[] tmpResponseData = new byte[3024];
                     int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
                     byte[] responseData = new byte[bytesRead];
                     Array.Copy(tmpResponseData, responseData, bytesRead);
                     ReturnObject recievedObject = JsonSerializer.Deserialize<ReturnObject>(responseData);
+                    recievedObject.client = clientIP + ":" + clientPort;
+                    returnObjectsList.Add(recievedObject);
+                    Dispatcher.Invoke(() => {
+                        ResultsRecords.Add(new ResultRecord { 
+                            ClientName = clientIP+":"+clientPort, 
+                            RecieveDate = recievedObject.receiveTime.ToString(), 
+                            BeginDate = recievedObject.beginTime.ToString(),
+                            EndDate = recievedObject.endTime.ToString(),
+                            result = recievedObject});
+                    });
                     MessageBox.Show("Odebrano wyniki obliczeń od klienta w ilości "+recievedObject.results.Count, "Odebrani wyniki", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 }
@@ -193,12 +185,7 @@ namespace Grafy_serwer.Pages
                 
             }
         }
-        public class Record
-        {
-            public string IPAddress { get; set; }
-            public int Port { get; set; }
-            public string Status { get; set; }
-        }
+        
 
         private void StartCalculation(object sender, RoutedEventArgs e)
         {
@@ -257,6 +244,27 @@ namespace Grafy_serwer.Pages
                 var tmpData = JsonSerializer.Serialize(objectsList[i]);
                 clientsStreams[i].Write(Encoding.UTF8.GetBytes(tmpData));
             }
+        }
+
+        private void Show_record_Info(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                ResultRecord item = button.DataContext as ResultRecord;
+                if (item != null)
+                {
+                    // Tutaj możesz wykorzystać obiekt 'item', na podstawie którego został wygenerowany rekord
+                }
+            }
+        }
+
+        private void Show_All_Results(object sender, RoutedEventArgs e)
+        {
+             AllResultsWindow window = new AllResultsWindow();
+
+            window.returnObjectsList = returnObjectsList;
+            window.ShowDialog();
         }
     }
 }

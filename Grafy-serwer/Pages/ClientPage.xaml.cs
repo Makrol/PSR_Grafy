@@ -102,7 +102,7 @@ namespace Grafy_serwer.Pages
                         Dispatcher.Invoke(()=> { clientStstus.Text = "Status: oczekuje na zadanie"; });
                         byte[] tmpResponseData = new byte[3024];
                         int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
-                        returnObject.beginTime = DateTime.Now;
+                        returnObject.receiveTime = DateTime.Now;
                         byte[] responseData = new byte[bytesRead];
                         Array.Copy(tmpResponseData, responseData, bytesRead);
                         SendObject recievedObject = JsonSerializer.Deserialize<SendObject>(responseData);

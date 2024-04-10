@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -10,6 +11,8 @@ namespace Grafy_serwer
 {
     public class Node
     {
+        //pozycja rysowanej elipsy
+        public Point position { get; set; }
         //elpisa rysowana na ekranie
         public Ellipse ellipse { get; set; }
         //lista lini połączonych z punktem
