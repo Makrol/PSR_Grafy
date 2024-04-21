@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +18,7 @@ namespace Grafy_serwer
         public Ellipse ellipse { get; set; }
         //lista lini połączonych z punktem
         public List<EdgeEndpoint> edgeEndpoints = new List<EdgeEndpoint>();
-
+        public List<int> forignNodeIndexes = new List<int>();
         public int CalculateDistance(Node otherNode)
         {
             if (ellipse == null || otherNode.ellipse == null)

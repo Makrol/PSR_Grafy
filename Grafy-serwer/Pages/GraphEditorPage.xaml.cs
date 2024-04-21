@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Text.Json;
 
 
 namespace Grafy_serwer.Pages
@@ -76,17 +78,26 @@ namespace Grafy_serwer.Pages
 
                         // Dodajemy linię do kontrolki Canvas
                         canva.Children.Add(line);
+
+                        //Zapisanie indeksów krawędzi
+                        int firstNodeIndex=-1, secondNodeIndex=-1;
+                        int i = 0;
                         foreach (var node in nodes)
                         {
                             if (node.ellipse == selectedNodes[0])
                             {
+                                firstNodeIndex = i;
                                 node.edgeEndpoints.Add(new EdgeEndpoint { line = line, isFirstPoint = true });
                             }
                             else if (node.ellipse == selectedNodes[1])
                             {
+                                secondNodeIndex = i;
                                 node.edgeEndpoints.Add(new EdgeEndpoint { line = line });
                             }
+                            i++;
                         }
+                        nodes[firstNodeIndex].forignNodeIndexes.Add(secondNodeIndex);
+                     
                         foreach (var node in selectedNodes)
                         {
                             node.Fill = Brushes.Red;
@@ -174,6 +185,57 @@ namespace Grafy_serwer.Pages
         public static List<Node> getGrapfNodes()
         {
             return nodes;
+        }
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "Pliki JSON (*.json)|*.json|Wszystkie pliki (*.*)|*.*";
+                Nullable<bool> result = saveFileDialog.ShowDialog();
+                if (result == true)
+                {
+                    string filePath = saveFileDialog.FileName;
+
+                    // Serializuj listę nodes do JSON
+                    //string json = JsonConvert.SerializeObject(nodes);
+                    string json = JsonSerializer.Serialize(Generate_Saveable_Graph());
+                    // Zapisz JSON do pliku
+                    File.WriteAllText(filePath, json);
+
+                    MessageBox.Show("Dane zostały zapisane pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas zapisywania danych: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Obsługa zdarzenia kliknięcia przycisku "Wczytaj"
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            /*OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileContent.Text = File.ReadAllText(openFileDialog.FileName);
+            }*/
+        }
+
+        private GraphStructure Generate_Saveable_Graph()
+        {
+            GraphStructure graphStructure = new GraphStructure();
+            int i = 0;
+            foreach (Node node in nodes)
+            {
+                graphStructure.nodePositions.Add(node.position);
+                foreach(int index in node.forignNodeIndexes)
+                {
+                    graphStructure.edgeEndpoints.Add(Tuple.Create(i, index));
+                }
+                i++;
+            }
+            return graphStructure;
         }
     }
 }
