@@ -42,18 +42,8 @@ namespace Grafy_serwer.Pages
         {
             if (isNodeAdding)
             {
-                Ellipse ellipse = new Ellipse();
-                ellipse.Width = 10;
-                ellipse.Height = 10;
-                ellipse.Fill = Brushes.Red;
-
                 Point position = e.GetPosition(canva);
-
-                Canvas.SetLeft(ellipse, position.X - ellipse.Width / 2);
-                Canvas.SetTop(ellipse, position.Y - ellipse.Height / 2);
-
-                canva.Children.Add(ellipse);
-                nodes.Add(new Node { ellipse = ellipse,position=position });
+                createNodeOnWorkspace(position);
             }
             else if (isEdgeAdding)
             {
@@ -67,36 +57,7 @@ namespace Grafy_serwer.Pages
                     selectedNodes.Add((Ellipse)hitTestResult.VisualHit);
                     if (selectedNodes.Count == 2)
                     {
-                        // Tworzymy nową linię
-                        Line line = new Line();
-                        line.Stroke = Brushes.Black; // Ustawiamy kolor linii na czarny
-                        line.X1 = Canvas.GetLeft(selectedNodes[0]) + selectedNodes[0].Width / 2; // Punkt początkowy X
-                        line.Y1 = Canvas.GetTop(selectedNodes[0]) + selectedNodes[0].Height / 2; // Punkt początkowy Y
-                        line.X2 = Canvas.GetLeft(selectedNodes[1]) + selectedNodes[1].Width / 2; // Punkt końcowy X
-                        line.Y2 = Canvas.GetTop(selectedNodes[1]) + selectedNodes[1].Height / 2; // Punkt końcowy Y
-                        line.StrokeThickness = 2; // Grubość linii
-
-                        // Dodajemy linię do kontrolki Canvas
-                        canva.Children.Add(line);
-
-                        //Zapisanie indeksów krawędzi
-                        int firstNodeIndex=-1, secondNodeIndex=-1;
-                        int i = 0;
-                        foreach (var node in nodes)
-                        {
-                            if (node.ellipse == selectedNodes[0])
-                            {
-                                firstNodeIndex = i;
-                                node.edgeEndpoints.Add(new EdgeEndpoint { line = line, isFirstPoint = true });
-                            }
-                            else if (node.ellipse == selectedNodes[1])
-                            {
-                                secondNodeIndex = i;
-                                node.edgeEndpoints.Add(new EdgeEndpoint { line = line });
-                            }
-                            i++;
-                        }
-                        nodes[firstNodeIndex].forignNodeIndexes.Add(secondNodeIndex);
+                        createEdgeOnWorkspace(selectedNodes[0], selectedNodes[1]);
                      
                         foreach (var node in selectedNodes)
                         {
@@ -215,11 +176,34 @@ namespace Grafy_serwer.Pages
         // Obsługa zdarzenia kliknięcia przycisku "Wczytaj"
         private void Load_Click(object sender, RoutedEventArgs e)
         {
-            /*OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                FileContent.Text = File.ReadAllText(openFileDialog.FileName);
-            }*/
+                Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                openFileDialog.Filter = "Pliki JSON (*.json)|*.json|Wszystkie pliki (*.*)|*.*";
+                Nullable<bool> result = openFileDialog.ShowDialog();
+                if (result == true)
+                {
+                    string filePath = openFileDialog.FileName;
+                    string json = File.ReadAllText(filePath);
+                    GraphStructure structure = JsonSerializer.Deserialize<GraphStructure>(json);
+
+                    foreach(var nodePos in structure.nodePositions)
+                    {
+                        createNodeOnWorkspace(nodePos);
+                    }
+                    foreach(var edgeIndexes in structure.edgeEndpoints)
+                    {
+                        Ellipse first = nodes[edgeIndexes.Item1].ellipse;
+                        Ellipse second = nodes[edgeIndexes.Item2].ellipse;
+                        createEdgeOnWorkspace(first, second);
+                    }
+                    MessageBox.Show("Dane zostały wczytane pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas wczytywania danych: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private GraphStructure Generate_Saveable_Graph()
@@ -236,6 +220,51 @@ namespace Grafy_serwer.Pages
                 i++;
             }
             return graphStructure;
+        }
+        private void createNodeOnWorkspace(Point position)
+        {
+            Ellipse ellipse = new Ellipse();
+            ellipse.Width = 10;
+            ellipse.Height = 10;
+            ellipse.Fill = Brushes.Red;
+
+            Canvas.SetLeft(ellipse, position.X - ellipse.Width / 2);
+            Canvas.SetTop(ellipse, position.Y - ellipse.Height / 2);
+
+            canva.Children.Add(ellipse);
+            nodes.Add(new Node { ellipse = ellipse, position = position });
+        }
+        private void createEdgeOnWorkspace(Ellipse firstNode, Ellipse secondNonde)
+        {
+            Line line = new Line();
+            line.Stroke = Brushes.Black; // Ustawiamy kolor linii na czarny
+            line.X1 = Canvas.GetLeft(firstNode) + firstNode.Width / 2; // Punkt początkowy X
+            line.Y1 = Canvas.GetTop(firstNode) + firstNode.Height / 2; // Punkt początkowy Y
+            line.X2 = Canvas.GetLeft(secondNonde) + secondNonde.Width / 2; // Punkt końcowy X
+            line.Y2 = Canvas.GetTop(secondNonde) + secondNonde.Height / 2; // Punkt końcowy Y
+            line.StrokeThickness = 2; // Grubość linii
+
+            // Dodajemy linię do kontrolki Canvas
+            canva.Children.Add(line);
+
+            //Zapisanie indeksów krawędzi
+            int firstNodeIndex = -1, secondNodeIndex = -1;
+            int i = 0;
+            foreach (var node in nodes)
+            {
+                if (node.ellipse == firstNode)
+                {
+                    firstNodeIndex = i;
+                    node.edgeEndpoints.Add(new EdgeEndpoint { line = line, isFirstPoint = true });
+                }
+                else if (node.ellipse == secondNonde)
+                {
+                    secondNodeIndex = i;
+                    node.edgeEndpoints.Add(new EdgeEndpoint { line = line });
+                }
+                i++;
+            }
+            nodes[firstNodeIndex].forignNodeIndexes.Add(secondNodeIndex);
         }
     }
 }
