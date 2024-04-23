@@ -242,7 +242,13 @@ namespace Grafy_serwer.Pages
             for (int i=0;i<objectsList.Count;i++)
             {
                 var tmpData = JsonSerializer.Serialize(objectsList[i]);
-                clientsStreams[i].Write(Encoding.UTF8.GetBytes(tmpData));
+                var test = Encoding.UTF8.GetBytes(tmpData);
+                clientsStreams[i].Write(test);
+
+                
+
+                clientsStreams[i].Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));
+
             }
         }
 

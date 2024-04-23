@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Text.Json;
+using Grafy_serwer.Modals;
 
 
 namespace Grafy_serwer.Pages
@@ -21,6 +22,8 @@ namespace Grafy_serwer.Pages
         private List<Ellipse> selectedNodes = new List<Ellipse>();
         public static List<Node> nodes = new List<Node>();
         private TabControl tabControl;
+        GraphStructure graph = new();
+
         public GraphEditorPage()
         {
             InitializeComponent();
@@ -58,7 +61,7 @@ namespace Grafy_serwer.Pages
                     if (selectedNodes.Count == 2)
                     {
                         createEdgeOnWorkspace(selectedNodes[0], selectedNodes[1]);
-                     
+
                         foreach (var node in selectedNodes)
                         {
                             node.Fill = Brushes.Red;
@@ -187,11 +190,11 @@ namespace Grafy_serwer.Pages
                     string json = File.ReadAllText(filePath);
                     GraphStructure structure = JsonSerializer.Deserialize<GraphStructure>(json);
 
-                    foreach(var nodePos in structure.nodePositions)
+                    foreach (var nodePos in structure.nodePositions)
                     {
                         createNodeOnWorkspace(nodePos);
                     }
-                    foreach(var edgeIndexes in structure.edgeEndpoints)
+                    foreach (var edgeIndexes in structure.edgeEndpoints)
                     {
                         Ellipse first = nodes[edgeIndexes.Item1].ellipse;
                         Ellipse second = nodes[edgeIndexes.Item2].ellipse;
@@ -205,7 +208,49 @@ namespace Grafy_serwer.Pages
                 MessageBox.Show($"Wystąpił błąd podczas wczytywania danych: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Generate_Graph(object sender, RoutedEventArgs e)
+        {
+            Random rand = new();
 
+            nodes.Clear();
+            canva.Children.Clear();
+            graph.edgeEndpoints.Clear();
+            graph.nodePositions.Clear();
+            GenerateGraphWindow window = new();
+            window.ShowDialog();
+
+
+            int numNodes = int.Parse(window.Nodes.Text); 
+            int maxEdges = numNodes * (numNodes - 1) / 2;
+            double percent = window.Percent.Value;
+            int maxEdgesPercent = (int)(maxEdges * percent / 100);
+            // Generowanie węzłów
+            for (int i = 0; i < numNodes; i++)
+            {
+                int x = rand.Next(0, int.Parse(window.X.Text));
+                int y = rand.Next(0, int.Parse(window.Y.Text));
+                graph.nodePositions.Add(new Point(x, y));
+                createNodeOnWorkspace(new Point(x, y));
+
+            }
+
+            // Generowanie krawędzi
+            for (int i = 0; i < maxEdgesPercent;)
+            {
+                int startNode = rand.Next(0, numNodes); 
+                int endNode = rand.Next(0, numNodes);
+
+                if (startNode != endNode && !graph.IsEdgeUsed(startNode, endNode))
+                {
+                    graph.edgeEndpoints.Add(new Tuple<int, int>(startNode, endNode));
+                    Ellipse first = nodes[startNode].ellipse;
+                    Ellipse second = nodes[endNode].ellipse;
+                    createEdgeOnWorkspace(first, second);
+                    i++;
+                }
+            }
+
+        }
         private GraphStructure Generate_Saveable_Graph()
         {
             GraphStructure graphStructure = new GraphStructure();
@@ -213,7 +258,7 @@ namespace Grafy_serwer.Pages
             foreach (Node node in nodes)
             {
                 graphStructure.nodePositions.Add(node.position);
-                foreach(int index in node.forignNodeIndexes)
+                foreach (int index in node.forignNodeIndexes)
                 {
                     graphStructure.edgeEndpoints.Add(Tuple.Create(i, index));
                 }

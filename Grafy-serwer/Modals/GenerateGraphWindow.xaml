@@ -1,0 +1,53 @@
+﻿<Window x:Class="Grafy_serwer.Modals.GenerateGraphWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Grafy_serwer.Modals"
+        mc:Ignorable="d"
+        Title="GenerateGraphWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1">
+            Podaj do jakiej wartości X będą generować się punkty:
+        </TextBlock>
+
+        <TextBox Grid.Row="2" Margin="10" Width="100" Height="30"
+                  Text="1000"
+                 PreviewTextInput="NumericInputOnly"
+                 x:Name="X"/>
+        <TextBlock Grid.Row="3">
+            Podaj do jakiej wartości Y będą generować się punkty:
+        </TextBlock>
+        <TextBox Grid.Row="4" Margin="10" Width="100" Height="30"
+                  Text="1000"
+                 PreviewTextInput="NumericInputOnly"
+                 x:Name="Y"/>
+
+        <TextBlock Grid.Row="5">
+            Podaj liczbę węzłów:
+        </TextBlock>
+        <TextBox Grid.Row="6" Margin="10" Width="100" Height="30"
+                  Text="50"
+                 PreviewTextInput="NumericInputOnly"
+                 x:Name="Nodes"/>
+        <DockPanel Grid.Row="7" VerticalAlignment="Center" Margin="10">
+            <TextBox  Text="{Binding ElementName=Percent, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
+            <Slider  Minimum="1" Maximum="100" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="Percent" />
+        </DockPanel>
+        <Button Grid.Row="8" Margin="10" Width="100" Height="30" Content="Zamknij" Click="CloseButtonClick"/>
+
+    </Grid>
+</Window>
