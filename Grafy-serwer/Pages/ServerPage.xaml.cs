@@ -149,12 +149,36 @@ namespace Grafy_serwer.Pages
                         // Jeśli klient został odłączony, przerwij pętlę
                         break;
                     }
+                    int bufferSize = 1024;
+                    int initBufferSize = bufferSize;
+                    byte[] tmpResponseData = new byte[bufferSize];
+                    int bytesRead = 0;
+                    int totalBytesRead = 0;
 
-                    byte[] tmpResponseData = new byte[3024];
+                    while(true)
+                    {
+                        bytesRead = stream.Read(tmpResponseData, totalBytesRead, bufferSize);
+                        totalBytesRead += bytesRead;
+                        string tmpS = Encoding.UTF8.GetString(tmpResponseData);
+                        if (tmpS.Contains("END"))
+                        {
+                            break;
+                        }
+                        initBufferSize += bufferSize;
+                        Array.Resize(ref tmpResponseData, initBufferSize);
+                    }
+
+                   /* byte[] tmpResponseData = new byte[3024];
                     int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
                     byte[] responseData = new byte[bytesRead];
-                    Array.Copy(tmpResponseData, responseData, bytesRead);
-                    ReturnObject recievedObject = JsonSerializer.Deserialize<ReturnObject>(responseData);
+                    Array.Copy(tmpResponseData, responseData, bytesRead);*/
+
+                    byte[] responseData = new byte[totalBytesRead];
+                    Array.Copy(tmpResponseData, responseData, totalBytesRead);
+                    string stringData = Encoding.UTF8.GetString(responseData);
+                    stringData = stringData[..^5];
+
+                    ReturnObject recievedObject = JsonSerializer.Deserialize<ReturnObject>(stringData);
                     recievedObject.client = clientIP + ":" + clientPort;
                     returnObjectsList.Add(recievedObject);
                     Dispatcher.Invoke(() => {

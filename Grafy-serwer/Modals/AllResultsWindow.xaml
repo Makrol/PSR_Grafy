@@ -21,7 +21,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding BegineDate}" Header="Rozpoczęto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończono"/>
                     <GridViewColumn DisplayMemberBinding="{Binding StartNode}" Header="Węzeł początkowy"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path}" Header="Trasa"/>
+                    
                     <GridViewColumn DisplayMemberBinding="{Binding Distance}" Header="Suma długości"/>
                 </GridView>
             </ListView.View>

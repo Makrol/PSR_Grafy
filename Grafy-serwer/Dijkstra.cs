@@ -45,7 +45,7 @@ namespace Grafy_serwer
             }
             DateTime end = DateTime.Now;
 
-            PrintSolution(distance, parent, size, sourceNodeIndex);
+            //PrintSolution(distance, parent, size, sourceNodeIndex);
             CalculationResult returnObject = CreateReturnObject(distance, parent, size, sourceNodeIndex);
             returnObject.beginCalculation = begin;
             returnObject.endCalculations = end;

@@ -112,20 +112,12 @@ namespace Grafy_serwer.Pages
 
                             bytesRead = stream.Read(tmpResponseData, totalBytesRead, bufferSize);
                             totalBytesRead+= bytesRead;
-                            /* if (bytesRead == 0)
-                             {
-                                 continue;
-                             }
-                             if (bytesRead < 1024)
-                                 continue;*/
                             string tmpS = Encoding.UTF8.GetString(tmpResponseData);
                             if (tmpS.Contains("END"))
                             {
-                                // Zakończ odczyt danych, ponieważ klient wysłał sygnał końca
-                               // Console.WriteLine("Koniec komunikacji. Klient zakończył wysyłanie danych.");
                                 break;
                             }
-                            initBufferSize *= 2;
+                            initBufferSize += bufferSize;
                             Array.Resize(ref tmpResponseData, initBufferSize);
 
                         }
@@ -150,6 +142,7 @@ namespace Grafy_serwer.Pages
                         //zwracanie do serwera
                         var tmpData = JsonSerializer.Serialize(returnObject);
                         stream.Write(Encoding.UTF8.GetBytes(tmpData));
+                        stream.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));
 
                     }
                 }

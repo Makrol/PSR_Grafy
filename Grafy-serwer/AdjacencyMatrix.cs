@@ -33,20 +33,7 @@ namespace Grafy_serwer
                     matrix[i][index] = nodes[i].CalculateDistance(nodes[index]);
                 }
             }
-            
-            
-            for(int j=0;j<size;j++)
-            {
-                for(int k=0;k<size;k++)
-                {
-                    Debug.Write(matrix[j][k]);
-                    Debug.Write(" ");
-                }
-                Debug.WriteLine("");
-            }
             return matrix;
-            // Dijkstra.determineSolution(matrix, 0, size);
-
         }
         private List<int> findConnectedNodes(Node currentNode,int currentNodeIndex, List<Node> nodes)
         {
