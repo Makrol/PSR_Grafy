@@ -233,22 +233,43 @@ namespace Grafy_serwer.Pages
                 createNodeOnWorkspace(new Point(x, y));
 
             }
-
             // Generowanie krawędzi
-            for (int i = 0; i < maxEdgesPercent;)
+            if (true)
             {
-                int startNode = rand.Next(0, numNodes); 
-                int endNode = rand.Next(0, numNodes);
+                
+                var edgesIndexes = BarabásiAlbert.createEdges(3, 2, nodes.Count);
+                //var edgesIndexes = BarabásiAlbert.createEdgesWithPercents(3, 2, nodes.Count,percent/ 1000);
 
-                if (startNode != endNode && !graph.IsEdgeUsed(startNode, endNode))
+                foreach (var edge in edgesIndexes)
                 {
-                    graph.edgeEndpoints.Add(new Tuple<int, int>(startNode, endNode));
+                    int startNode = edge.Item1;
+                    int endNode = edge.Item2;
+                    graph.edgeEndpoints.Add(edge);
                     Ellipse first = nodes[startNode].ellipse;
                     Ellipse second = nodes[endNode].ellipse;
                     createEdgeOnWorkspace(first, second);
-                    i++;
                 }
             }
+            else
+            {
+                for (int i = 0; i < maxEdgesPercent;)
+                {
+                    int startNode = rand.Next(0, numNodes);
+                    int endNode = rand.Next(0, numNodes);
+
+                    if (startNode != endNode && !graph.IsEdgeUsed(startNode, endNode))
+                    {
+                        graph.edgeEndpoints.Add(new Tuple<int, int>(startNode, endNode));
+                        Ellipse first = nodes[startNode].ellipse;
+                        Ellipse second = nodes[endNode].ellipse;
+                        createEdgeOnWorkspace(first, second);
+                        i++;
+                    }
+                }
+            }
+            
+            
+            
 
         }
         private GraphStructure Generate_Saveable_Graph()
