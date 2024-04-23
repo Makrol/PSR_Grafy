@@ -98,14 +98,43 @@ namespace Grafy_serwer.Pages
 
                     while (true)
                     {
+                        int bufferSize = 1024;
+                        int initBufferSize = bufferSize;
                         ReturnObject returnObject = new ReturnObject();
                         Dispatcher.Invoke(()=> { clientStstus.Text = "Status: oczekuje na zadanie"; });
-                        byte[] tmpResponseData = new byte[3024];
-                        int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
+                        byte[] tmpResponseData = new byte[bufferSize];
+                        int bytesRead=0;
+                        int totalBytesRead=0;
+                        
+                        
+                        while(true)
+                        {
+
+                            bytesRead = stream.Read(tmpResponseData, totalBytesRead, bufferSize);
+                            totalBytesRead+= bytesRead;
+                            /* if (bytesRead == 0)
+                             {
+                                 continue;
+                             }
+                             if (bytesRead < 1024)
+                                 continue;*/
+                            string tmpS = Encoding.UTF8.GetString(tmpResponseData);
+                            if (tmpS.Contains("END"))
+                            {
+                                // Zakończ odczyt danych, ponieważ klient wysłał sygnał końca
+                               // Console.WriteLine("Koniec komunikacji. Klient zakończył wysyłanie danych.");
+                                break;
+                            }
+                            initBufferSize *= 2;
+                            Array.Resize(ref tmpResponseData, initBufferSize);
+
+                        }
                         returnObject.receiveTime = DateTime.Now;
-                        byte[] responseData = new byte[bytesRead];
-                        Array.Copy(tmpResponseData, responseData, bytesRead);
-                        SendObject recievedObject = JsonSerializer.Deserialize<SendObject>(responseData);
+                        byte[] responseData = new byte[totalBytesRead];
+                        Array.Copy(tmpResponseData, responseData, totalBytesRead);
+                        string stringData = Encoding.UTF8.GetString(responseData);
+                        stringData = stringData[..^5];
+                        SendObject recievedObject = JsonSerializer.Deserialize<SendObject>(stringData);
                         if (recievedObject == null)
                             continue;
                         MessageBox.Show("KLient otrzymał pakiet danych", "Otrzymano dane", MessageBoxButton.OK, MessageBoxImage.Information);
