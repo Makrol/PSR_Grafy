@@ -119,7 +119,7 @@ namespace Grafy_serwer.Pages
 
         private void HandleClient(object obj)
         {
-
+            bool isClientEnd = false;
             TcpClient client = (TcpClient)obj;
             clients.Add(client);
             NetworkStream stream = client.GetStream();
@@ -128,31 +128,14 @@ namespace Grafy_serwer.Pages
             connectedClientsCounter++;
             string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             int clientPort = ((IPEndPoint)client.Client.RemoteEndPoint).Port;
-
+            var newClientRecord = new CliendRecord { IPAddress = clientIP, Port = clientPort, Status = "aktywny" };
             Dispatcher.Invoke(() => {
-                ConnectedClientsRecords.Add(new CliendRecord { IPAddress = clientIP, Port = clientPort, Status = "aktywny" });
+                ConnectedClientsRecords.Add(newClientRecord);
             });
             try
             {
                 while (true)
                 {
-                    // Sprawdź, czy klient jest nadal połączony
-                    if (client.Client.Poll(0, SelectMode.SelectRead) && client.Client.Available == 0)
-                    {
-                        connectedClientsCounter--;
-                        Dispatcher.Invoke(() => {
-                            CliendRecord recordToRemove = ConnectedClientsRecords.FirstOrDefault(record => record.IPAddress == clientIP && record.Port == clientPort);
-
-                            if (recordToRemove != null)
-                            {
-                                ConnectedClientsRecords.Remove(recordToRemove);
-                            }
-                        });
-                        MessageBox.Show("Utracono połączenie z klientem o ip "+clientIP+" i porcie "+clientPort, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                        // Jeśli klient został odłączony, przerwij pętlę
-                        break;
-                    }
                     int bufferSize = 1024;
                     int initBufferSize = bufferSize;
                     byte[] tmpResponseData = new byte[bufferSize];
@@ -161,7 +144,12 @@ namespace Grafy_serwer.Pages
 
                     while(true)
                     {
+                        isClientEnd = handleClientDisconect(client, stream, newClientRecord, clientIP, clientPort);
+                        if (isClientEnd)
+                            break;
                         bytesRead = stream.Read(tmpResponseData, totalBytesRead, bufferSize);
+                       // if (totalBytesRead == 0 && bytesRead == 0)
+                         //   break;
                         totalBytesRead += bytesRead;
                         string tmpS = Encoding.UTF8.GetString(tmpResponseData);
                         if (tmpS.Contains("END"))
@@ -172,6 +160,8 @@ namespace Grafy_serwer.Pages
                         Array.Resize(ref tmpResponseData, initBufferSize);
                     }
 
+                    if (isClientEnd)
+                        break;
                     byte[] responseData = new byte[totalBytesRead];
                     Array.Copy(tmpResponseData, responseData, totalBytesRead);
                     string stringData = Encoding.UTF8.GetString(responseData);
@@ -181,22 +171,27 @@ namespace Grafy_serwer.Pages
                     recievedObject.client = clientIP + ":" + clientPort;
                     returnObjectsList.Add(recievedObject);
                     Dispatcher.Invoke(() => {
-                        ResultsRecords.Add(new ResultRecord { 
-                            ClientName = clientIP+":"+clientPort, 
-                            RecieveDate = recievedObject.receiveTime.ToString(), 
+                        ResultsRecords.Add(new ResultRecord
+                        {
+                            ClientName = clientIP + ":" + clientPort,
+                            RecieveDate = recievedObject.receiveTime.ToString(),
                             BeginDate = recievedObject.beginTime.ToString(),
                             EndDate = recievedObject.endTime.ToString(),
-                            result = recievedObject});
+                            result = recievedObject
+                        });
                     });
 
                     //MessageBox.Show("Odebrano wyniki obliczeń od klienta w ilości "+recievedObject.results.Count, "Odebrani wyniki", MessageBoxButton.OK, MessageBoxImage.Information);
                     var objectToSend = generateNewSendObject(ServerPage.packageSize);
-                    if(objectToSend!=null)
+                    if (objectToSend != null)
                     {
                         sendObject(objectToSend, stream);
                     }
                     else
+                    {
                         break;
+                    }
+                        
                 }
             }
             catch (Exception ex)
@@ -205,13 +200,8 @@ namespace Grafy_serwer.Pages
             }
             finally
             {
-                // Zamknij strumień i klienta
                 stream.Close();
                 client.Close();
-                /*Dispatcher.Invoke(() =>
-                {
-                    tabControl.SelectedIndex = 0;
-                });*/
                 
             }
         }
@@ -355,6 +345,22 @@ namespace Grafy_serwer.Pages
 
             window.returnObjectsList = returnObjectsList;
             window.ShowDialog();
+        }
+        private bool handleClientDisconect(TcpClient client, NetworkStream stream, CliendRecord newCliendRecord,string ip,int port)
+        {
+            if (client.Client.Poll(0, SelectMode.SelectRead) && client.Client.Available == 0)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    ConnectedClientsRecords.Remove(newCliendRecord);
+                    clients.Remove(client);
+                    clientsStreams.Remove(stream);
+                    connectedClientsCounter--;
+                });
+                MessageBox.Show("Utracono połączenie z klientem o ip " + ip + " i porcie " + port, "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return true;
+            }
+            return false;
         }
     }
 }
