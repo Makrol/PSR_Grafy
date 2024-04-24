@@ -129,7 +129,7 @@ namespace Grafy_serwer.Pages
                         SendObject recievedObject = JsonSerializer.Deserialize<SendObject>(stringData);
                         if (recievedObject == null)
                             continue;
-                        MessageBox.Show("KLient otrzymał pakiet danych", "Otrzymano dane", MessageBoxButton.OK, MessageBoxImage.Information);
+                       // MessageBox.Show("KLient otrzymał pakiet danych", "Otrzymano dane", MessageBoxButton.OK, MessageBoxImage.Information);
                         Dispatcher.Invoke(() => { clientStstus.Text = "Status: wykonuje obliczenia"; });
 
                         returnObject.beginTime = DateTime.Now;

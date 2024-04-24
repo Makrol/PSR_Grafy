@@ -3,13 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\allresultswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\pages\\grapheditorpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\allresultswindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\granulationwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\pages\\serverpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\pages\\clientpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\pages\\serverpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\granulationwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\generategraphwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\generategraphwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\pages\\connectionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71DB4CFB-9F16-446E-84B4-0DF549C0B664}|..\\Grafy-serwer\\Grafy-klient-serwer.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy-serwer\\modals\\allresultswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,26 +53,74 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AllResultsWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
-              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
-              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
+              "Title": "GraphEditorPage.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\GraphEditorPage.xaml",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Pages\\GraphEditorPage.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\GraphEditorPage.xaml",
+              "RelativeToolTip": "..\\Grafy-serwer\\Pages\\GraphEditorPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-04-23T16:12:24.389Z",
+              "WhenOpened": "2024-04-24T07:18:00.253Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AllResultsWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\AllResultsWindow.xaml.cs",
-              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\AllResultsWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\AllResultsWindow.xaml.cs",
-              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\AllResultsWindow.xaml.cs",
-              "ViewState": "AQIAAEwAAAAAAAAAAAAcwAAAAAAAAAAA",
+              "Title": "GranulationWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GranulationWindow.xaml.cs",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\GranulationWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GranulationWindow.xaml.cs",
+              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\GranulationWindow.xaml.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAwB4AAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-23T16:12:09.525Z",
+              "WhenOpened": "2024-04-24T06:21:40.026Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ServerPage.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ServerPage.xaml",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Pages\\ServerPage.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ServerPage.xaml",
+              "RelativeToolTip": "..\\Grafy-serwer\\Pages\\ServerPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-24T06:17:23.486Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GenerateGraphWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml",
+              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-24T06:16:08.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ConnectionPage.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ConnectionPage.xaml",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Pages\\ConnectionPage.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ConnectionPage.xaml",
+              "RelativeToolTip": "..\\Grafy-serwer\\Pages\\ConnectionPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-24T06:14:45.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GranulationWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GranulationWindow.xaml",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\GranulationWindow.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GranulationWindow.xaml",
+              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\GranulationWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-24T06:07:21.993Z",
               "EditorCaption": ""
             },
             {
@@ -62,9 +131,47 @@
               "RelativeDocumentMoniker": "..\\Grafy-serwer\\Pages\\ServerPage.xaml.cs",
               "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ServerPage.xaml.cs",
               "RelativeToolTip": "..\\Grafy-serwer\\Pages\\ServerPage.xaml.cs",
-              "ViewState": "AQIAAKYAAAAAAAAAAAAlwLUAAAAUAAAA",
+              "ViewState": "AQIAABcAAAAAAAAAAAAmwC0AAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-23T16:09:50.141Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ClientPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ClientPage.xaml.cs",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Pages\\ClientPage.xaml.cs",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Pages\\ClientPage.xaml.cs",
+              "RelativeToolTip": "..\\Grafy-serwer\\Pages\\ClientPage.xaml.cs",
+              "ViewState": "AQIAAJAAAAAAAAAAAADgv5kAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-24T06:39:35.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GenerateGraphWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml.cs",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml.cs",
+              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\GenerateGraphWindow.xaml.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAQwBsAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-24T06:25:58.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AllResultsWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
+              "RelativeDocumentMoniker": "..\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
+              "RelativeToolTip": "..\\Grafy-serwer\\Modals\\AllResultsWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-23T16:12:24.389Z",
               "EditorCaption": ""
             }
           ]

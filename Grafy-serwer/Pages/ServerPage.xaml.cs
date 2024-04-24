@@ -15,6 +15,7 @@ namespace Grafy_serwer.Pages
     /// </summary>
     public partial class ServerPage : Page
     {
+        private AdjacencyMatrix matrix;
         private TabControl tabControl;
         public ObservableCollection<CliendRecord> ConnectedClientsRecords { get; set; }
         public ObservableCollection<ResultRecord> ResultsRecords { get; set; }
@@ -23,12 +24,13 @@ namespace Grafy_serwer.Pages
         private static List<Thread> clientThreads = new List<Thread>();
         private int nodeInPackage =0;
         private int nodeCounter = 0;
-        private int counter = 0;
+        private int connectedClientsCounter = 0;
         private Thread serverThread;
         private List<TcpClient> clients = new List<TcpClient> ();
         private List<NetworkStream> clientsStreams = new List<NetworkStream> ();
         private List<ReturnObject> returnObjectsList = new List<ReturnObject> ();
-
+        private int nodeProgres = 0;
+        static public int packageSize = -1;
         public ServerPage()
         {
             InitializeComponent();
@@ -40,6 +42,8 @@ namespace Grafy_serwer.Pages
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            clientsStreams.Clear();
+            returnObjectsList.Clear();
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
@@ -74,7 +78,7 @@ namespace Grafy_serwer.Pages
             }
             tabControl.SelectedIndex = 1;
             ConnectedClientsRecords.Clear();
-            counter = 0;
+            connectedClientsCounter = 0;
         }
         private void StartServer()
         {
@@ -121,7 +125,7 @@ namespace Grafy_serwer.Pages
             NetworkStream stream = client.GetStream();
             clientsStreams.Add(stream);
 
-            counter++;
+            connectedClientsCounter++;
             string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             int clientPort = ((IPEndPoint)client.Client.RemoteEndPoint).Port;
 
@@ -135,7 +139,7 @@ namespace Grafy_serwer.Pages
                     // Sprawdź, czy klient jest nadal połączony
                     if (client.Client.Poll(0, SelectMode.SelectRead) && client.Client.Available == 0)
                     {
-                        counter--;
+                        connectedClientsCounter--;
                         Dispatcher.Invoke(() => {
                             CliendRecord recordToRemove = ConnectedClientsRecords.FirstOrDefault(record => record.IPAddress == clientIP && record.Port == clientPort);
 
@@ -168,11 +172,6 @@ namespace Grafy_serwer.Pages
                         Array.Resize(ref tmpResponseData, initBufferSize);
                     }
 
-                   /* byte[] tmpResponseData = new byte[3024];
-                    int bytesRead = stream.Read(tmpResponseData, 0, tmpResponseData.Length);
-                    byte[] responseData = new byte[bytesRead];
-                    Array.Copy(tmpResponseData, responseData, bytesRead);*/
-
                     byte[] responseData = new byte[totalBytesRead];
                     Array.Copy(tmpResponseData, responseData, totalBytesRead);
                     string stringData = Encoding.UTF8.GetString(responseData);
@@ -189,8 +188,15 @@ namespace Grafy_serwer.Pages
                             EndDate = recievedObject.endTime.ToString(),
                             result = recievedObject});
                     });
-                    MessageBox.Show("Odebrano wyniki obliczeń od klienta w ilości "+recievedObject.results.Count, "Odebrani wyniki", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                    //MessageBox.Show("Odebrano wyniki obliczeń od klienta w ilości "+recievedObject.results.Count, "Odebrani wyniki", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var objectToSend = generateNewSendObject(ServerPage.packageSize);
+                    if(objectToSend!=null)
+                    {
+                        sendObject(objectToSend, stream);
+                    }
+                    else
+                        break;
                 }
             }
             catch (Exception ex)
@@ -202,10 +208,10 @@ namespace Grafy_serwer.Pages
                 // Zamknij strumień i klienta
                 stream.Close();
                 client.Close();
-                Dispatcher.Invoke(() =>
+                /*Dispatcher.Invoke(() =>
                 {
                     tabControl.SelectedIndex = 0;
-                });
+                });*/
                 
             }
         }
@@ -213,23 +219,77 @@ namespace Grafy_serwer.Pages
 
         private void StartCalculation(object sender, RoutedEventArgs e)
         {
+            if(connectedClientsCounter<=0)
+            {
+                MessageBox.Show("Nie można rozpocząć obliczeń ponieważ żaden klient nie połączył się z serwerem", "Brak klientów", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            GranulationWindow window = new GranulationWindow();
+            window.ShowDialog();
+            packageSize = window.granulationValue;
+            if(packageSize != -1)
+            {
+                listener.Stop();
+                calculationButton.IsEnabled=false;
+                var sendableObjects = generateInitSendObjects(packageSize);
+                sendObjectsToAll(sendableObjects);
+
+            }
             
-            listener.Stop();
-            calculationButton.IsEnabled=false;
-            var sendableObjects = generateInitSendObjects();
-            sendObjectsToAll(sendableObjects);
 
             
         }
-        private List<SendObject> generateInitSendObjects()
+        private SendObject generateNewSendObject(int nodeInPackage)
+        {
+            var nodes = GraphEditorPage.getGrapfNodes();
+            if (nodeProgres >= nodes.Count)
+                return null;
+            var sendObject = new SendObject();
+            sendObject.matrix = matrix.matrix;
+            for (int j = 0; j < nodeInPackage; j++)
+            {
+                if (nodeProgres > nodes.Count - 1)
+                    break;
+                sendObject.nodeIndexes.Add(nodeProgres);
+                nodeProgres++;
+            }
+            return sendObject;
+        }
+        private List<SendObject> generateInitSendObjects(int nodeInPackage)
+        {
+            var nodes = GraphEditorPage.getGrapfNodes();
+            matrix = new AdjacencyMatrix(nodes.Count);
+            matrix.generateMatrix(nodes);
+            List<SendObject> messages = new List<SendObject>();
+            for(int i=0;i<connectedClientsCounter ;i++)
+            {
+                var tmp = new SendObject();
+                tmp.matrix = matrix.matrix;
+                for(int j=0;j<nodeInPackage;j++)
+                {
+                    if (nodeProgres > nodes.Count - 1)
+                        break;
+                    tmp.nodeIndexes.Add(nodeProgres);
+                    nodeProgres++;
+                }
+                messages.Add(tmp);
+                if((i+1)%nodeInPackage==0)
+                {
+                    continue;
+                }
+            }
+            return messages;
+        }
+        /*
+         private List<SendObject> generateInitSendObjects(int packageSize)
         {
             var nodes = GraphEditorPage.getGrapfNodes();
             AdjacencyMatrix matrix = new AdjacencyMatrix(nodes.Count);
             matrix.generateMatrix(nodes);
             List<SendObject> messages = new List<SendObject>();
-            nodeInPackage = nodes.Count / counter;
+            nodeInPackage = nodes.Count / connectedClientsCounter;
             nodeCounter = 0;
-            for(int i=0;i<counter ;i++)
+            for(int i=0;i<connectedClientsCounter ;i++)
             {
                 var tmp = new SendObject();
                 tmp.matrix = matrix.matrix;
@@ -261,19 +321,19 @@ namespace Grafy_serwer.Pages
             }
             return messages;
         }
+         */
         private void sendObjectsToAll(List<SendObject> objectsList)
         {          
             for (int i=0;i<objectsList.Count;i++)
             {
-                var tmpData = JsonSerializer.Serialize(objectsList[i]);
-                var test = Encoding.UTF8.GetBytes(tmpData);
-                clientsStreams[i].Write(test);
-
-                
-
-                clientsStreams[i].Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));
-
+                sendObject(objectsList[i],clientsStreams[i]);
             }
+        }
+        private void sendObject(SendObject obj,NetworkStream stream)
+        {
+            var serializedData = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(obj));
+            stream.Write(serializedData);
+            stream.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));
         }
 
         private void Show_record_Info(object sender, RoutedEventArgs e)
