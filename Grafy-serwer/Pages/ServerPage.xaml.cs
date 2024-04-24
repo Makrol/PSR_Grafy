@@ -128,7 +128,7 @@ namespace Grafy_serwer.Pages
             connectedClientsCounter++;
             string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
             int clientPort = ((IPEndPoint)client.Client.RemoteEndPoint).Port;
-            var newClientRecord = new CliendRecord { IPAddress = clientIP, Port = clientPort, Status = "aktywny" };
+            var newClientRecord = new CliendRecord { IPAddress = clientIP, Port = clientPort, Count = 0};
             Dispatcher.Invoke(() => {
                 ConnectedClientsRecords.Add(newClientRecord);
             });
@@ -185,6 +185,11 @@ namespace Grafy_serwer.Pages
                     var objectToSend = generateNewSendObject(ServerPage.packageSize);
                     if (objectToSend != null)
                     {
+                        Dispatcher.Invoke(() => {
+                            ConnectedClientsRecords.First(row => row.IPAddress == newClientRecord.IPAddress && row.Port == newClientRecord.Port).Count++;
+                        });
+                      //  newClientRecord.Count++;
+
                         sendObject(objectToSend, stream);
                     }
                     else
@@ -223,7 +228,7 @@ namespace Grafy_serwer.Pages
                 calculationButton.IsEnabled=false;
                 var sendableObjects = generateInitSendObjects(packageSize);
                 sendObjectsToAll(sendableObjects);
-
+                
             }
             
 
@@ -316,6 +321,7 @@ namespace Grafy_serwer.Pages
         {          
             for (int i=0;i<objectsList.Count;i++)
             {
+                ConnectedClientsRecords[i].Count++;
                 sendObject(objectsList[i],clientsStreams[i]);
             }
         }
@@ -334,6 +340,11 @@ namespace Grafy_serwer.Pages
                 ResultRecord item = button.DataContext as ResultRecord;
                 if (item != null)
                 {
+                    AllResultsWindow window = new AllResultsWindow();
+                    var tmpList = new List<ReturnObject>();
+                    tmpList.Add(item.result);
+                    window.returnObjectsList = tmpList;
+                    window.ShowDialog();
                     // Tutaj możesz wykorzystać obiekt 'item', na podstawie którego został wygenerowany rekord
                 }
             }

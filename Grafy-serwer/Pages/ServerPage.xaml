@@ -41,9 +41,9 @@
         <ListView x:Name="listView" Grid.Column="1">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
-                    <GridViewColumn DisplayMemberBinding="{Binding IPAddress}" Header="Adres ip" Width="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Port}" Header="Port" Width="40" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" Width="60" />
+                    <GridViewColumn DisplayMemberBinding="{Binding IPAddress}" Header="Adres ip" Width="70" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Port}" Header="Port" Width="60" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Count}" Header="Ilość akcji" Width="60" />
                 </GridView>
             </ListView.View>
 

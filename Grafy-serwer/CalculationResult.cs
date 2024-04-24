@@ -33,5 +33,24 @@ namespace Grafy_serwer
             }
             return result;
         }
+        public List<string> PathToList()
+        {
+            List<string> result = new List<string>();
+            foreach (List<int> path in paths)
+            {
+                string tmpString = "";
+                for (int i = 0; i < path.Count; i++)
+                {
+                    tmpString += path[i];
+                    if (i < path.Count - 1)
+                        tmpString += "->";
+                }
+                if (path.Count == 0)
+                    result.Add("Brak\n");
+                else
+                    result.Add(tmpString);
+            }
+            return result;
+        }
     }
 }

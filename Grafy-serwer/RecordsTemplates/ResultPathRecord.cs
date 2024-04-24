@@ -13,8 +13,10 @@ namespace Grafy_serwer.RecordsTemplates
         public string BegineDate { get; set; }
         public string EndDate { get; set; }
         public string Path { get; set; }
+        public List<string> Paths { get; set; }
         public string Distance { get; set; }
         public string StartNode { get; set; }
+        public List<int> EndNode { get; set; } 
         public List<List<int>> IndexPaths {  get; set; }
     }
 }

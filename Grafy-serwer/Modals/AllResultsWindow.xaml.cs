@@ -29,14 +29,47 @@ namespace Grafy_serwer.Modals
         private Ellipse lastClickedNode = null;
         private Ellipse startNode = null;
         public ObservableCollection<ResultPathRecord> ResultsRecords { get; set; }
+        public ObservableCollection<PathRecord> ResultRecordPath { get; set; }
         public List<Ellipse> localNodes = new List<Ellipse>();
         public List<ReturnObject> returnObjectsList { get; set; } = new List<ReturnObject>();
         public AllResultsWindow()
         {
             InitializeComponent();
             canva.MouseLeftButtonDown += Canva_On_Click_Left;
+
             ResultsRecords = new ObservableCollection<ResultPathRecord>();
             allResultsListView.ItemsSource = ResultsRecords;
+
+            ResultRecordPath = new ObservableCollection<PathRecord>();
+            selectedResult.ItemsSource = ResultRecordPath;
+        }
+        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            // Pobierz skalę Canvas
+            ScaleTransform scaleTransform = canva.LayoutTransform as ScaleTransform;
+            if (scaleTransform == null)
+            {
+                scaleTransform = new ScaleTransform(1, 1);
+                canva.LayoutTransform = scaleTransform;
+            }
+
+            // Określ czynnik zmiany przybliżenia/oddalenia
+            double zoomFactor = 1.2;
+            if (e.Delta > 0)
+            {
+                // Przybliżenie
+                scaleTransform.ScaleX *= zoomFactor;
+                scaleTransform.ScaleY *= zoomFactor;
+            }
+            else
+            {
+                // Oddalenie
+                scaleTransform.ScaleX /= zoomFactor;
+                scaleTransform.ScaleY /= zoomFactor;
+            }
+
+            // Zablokuj propagację zdarzenia
+            e.Handled = true;
         }
         private void ModalWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -44,22 +77,33 @@ namespace Grafy_serwer.Modals
             {
                 foreach(var results in returnObject.results)
                 {
-                        ResultsRecords.Add(new ResultPathRecord
-                        {
-                            Clients = returnObject.client,
-                            RecieveDate = returnObject.receiveTime.ToString(),
-                            BegineDate = results.beginCalculation.ToString(),
-                            EndDate = results.endCalculations.ToString(),
-                            Path = results.PathToString(),
-                            Distance = results.sum.ToString(),
-                            IndexPaths = results.paths,
-                            StartNode = results.startNode.ToString(),
-                        });
+                    var endNode = new List<int>();
+                    foreach(var path in results.paths)
+                    {
+                        if(path.Count!=0)
+                            endNode.Add(path[path.Count-1]);
+                        else
+                            endNode.Add(-1);
+                    }
+                    ResultsRecords.Add(new ResultPathRecord
+                    {
+                        Clients = returnObject.client,
+                        RecieveDate = returnObject.receiveTime.ToString(),
+                        BegineDate = results.beginCalculation.ToString(),
+                        EndDate = results.endCalculations.ToString(),
+                        Path = results.PathToString(),
+                        Paths = results.PathToList(),
+                        Distance = results.sum.ToString(),
+                        IndexPaths = results.paths,
+                        StartNode = results.startNode.ToString(),
+                        EndNode = endNode
+                    });
                     
                     
                 }
                 
             }
+            ResultsRecords = new ObservableCollection<ResultPathRecord>(ResultsRecords.OrderBy(r => r.Distance));
             Generate_Graph();
         }
         private void Generate_Graph()
@@ -98,6 +142,12 @@ namespace Grafy_serwer.Modals
                 }
                 // Pobranie obiektu powiązanego z wybranym rekordem
                 ResultPathRecord selectedObject = (ResultPathRecord)allResultsListView.SelectedItem;
+                ResultRecordPath.Clear();
+                for(int i = 0;i<selectedObject.Paths.Count;i++)
+                {
+                    var newPathRecord = new PathRecord { path = selectedObject.Paths[i], endNode = selectedObject.EndNode[i] };
+                    ResultRecordPath.Add(newPathRecord);
+                }
                 if(startNode!=null)
                     startNode.Fill = Brushes.Red;
                 startNode = localNodes[int.Parse(selectedObject.StartNode)];
@@ -128,6 +178,23 @@ namespace Grafy_serwer.Modals
                 // Tutaj możesz użyć selectedObject do dalszej pracy
             }
         }
+        private void ListView_SelectionChanged_Path(object sender, SelectionChangedEventArgs e)
+        {
+            PathRecord selectedObject = (PathRecord)selectedResult.SelectedItem;
+            clearPathToGraph();
+            if (selectedObject.endNode == -1)
+                return;
+            var selectedNode = localNodes[selectedObject.endNode];
+
+            drawPathToNode(selectedNode);
+
+            if (lastClickedNode != null)
+            {
+                lastClickedNode.Fill = Brushes.Red;
+            }
+            lastClickedNode = selectedNode;
+
+        }
         private Line drawLine(Ellipse elNum1, Ellipse elNum2)
         {
             Line line = new Line();
@@ -135,8 +202,9 @@ namespace Grafy_serwer.Modals
             Color randomColor = Color.FromArgb((byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256));
             SolidColorBrush brush = new SolidColorBrush(randomColor);
             line.Stroke = brush;
+            line.Stroke = Brushes.Black;
 
-            
+
 
             line.X1 = Canvas.GetLeft(elNum1) + elNum1.Width / 2; // Punkt początkowy X
             line.Y1 = Canvas.GetTop(elNum1) + elNum1.Height / 2; // Punkt początkowy Y
@@ -147,7 +215,7 @@ namespace Grafy_serwer.Modals
             canva.Children.Add(line);
             return line;
         }
-        private void Canva_On_Click_Left(object sender, MouseButtonEventArgs e)
+        private void clearPathToGraph()
         {
             //przywracanie orginalnego koloru ścieżki do poprzednio zaznaczonego węzła
             if (selectetPathOnGraph != null)
@@ -158,6 +226,28 @@ namespace Grafy_serwer.Modals
                     pathPart.Stroke = lastSelectetPathOnGraphColor;
                 }
             }
+        }
+        private void drawPathToNode(Ellipse node)
+        {
+            if (node == startNode)
+                return;
+            node.Fill = Brushes.Blue;
+
+            //zaznaczanie ścieżki do wybranego węzła
+            selectetPathOnGraph = pathOnGraphsList.Find(p => p.destinationNode == node);
+            if (selectetPathOnGraph != null)
+            {
+                foreach (var pathPart in selectetPathOnGraph.pathParts)
+                {
+                    pathPart.StrokeThickness = 4;
+                    lastSelectetPathOnGraphColor = pathPart.Stroke;
+                    pathPart.Stroke = Brushes.Green;
+                }
+            }
+        }
+        private void Canva_On_Click_Left(object sender, MouseButtonEventArgs e)
+        {
+            clearPathToGraph();
 
             Ellipse tmpElipse = null;
             Point position = e.GetPosition(canva);
@@ -165,21 +255,7 @@ namespace Grafy_serwer.Modals
             if (hitTestResult != null && hitTestResult.VisualHit is Ellipse)
             {
                 tmpElipse = (Ellipse)hitTestResult.VisualHit;
-                if (tmpElipse == startNode)
-                    return;
-                tmpElipse.Fill = Brushes.Blue;
-
-                //zaznaczanie ścieżki do wybranego węzła
-                selectetPathOnGraph = pathOnGraphsList.Find(p => p.destinationNode == tmpElipse);
-                if(selectetPathOnGraph != null)
-                {
-                    foreach(var pathPart in selectetPathOnGraph.pathParts)
-                    {
-                        pathPart.StrokeThickness = 4;
-                        lastSelectetPathOnGraphColor = pathPart.Stroke;
-                        pathPart.Stroke = Brushes.Green;  
-                    }
-                }
+                drawPathToNode(tmpElipse);
             }
             if(lastClickedNode!=null)
             {

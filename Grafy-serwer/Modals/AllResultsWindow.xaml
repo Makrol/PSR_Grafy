@@ -12,20 +12,35 @@
             <RowDefinition Height="7*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="canva" Background="#D9D9D9" Grid.Row="0"/>
-        <ListView x:Name="allResultsListView" Grid.Row="1" SelectionChanged="ListView_SelectionChanged">
-            <ListView.View>
-                <GridView AllowsColumnReorder="True">
-                    <GridViewColumn DisplayMemberBinding="{Binding Client}" Header="Klient" />
-                    <GridViewColumn DisplayMemberBinding="{Binding RecieveDate}" Header="Otrzymano pakiet"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding BegineDate}" Header="Rozpoczęto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończono"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding StartNode}" Header="Węzeł początkowy"/>
-                    
-                    <GridViewColumn DisplayMemberBinding="{Binding Distance}" Header="Suma długości"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        
+        <Canvas x:Name="canva" Background="#D9D9D9" Grid.Row="0" MouseWheel="Canvas_MouseWheel"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="463*"/>
+                <ColumnDefinition Width="337*"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="allResultsListView" Grid.Column="0" SelectionChanged="ListView_SelectionChanged" Margin="0,0,3,0">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True">
+                        <GridViewColumn DisplayMemberBinding="{Binding Clients}" Header="Klient" />
+                        <GridViewColumn DisplayMemberBinding="{Binding RecieveDate}" Header="Otrzymano pakiet"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding BegineDate}" Header="Rozpoczęto"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończono"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding StartNode}" Header="Węzeł początkowy"/>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding Distance}" Header="Suma długości"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="selectedResult" Grid.Column="1" SelectionChanged="ListView_SelectionChanged_Path" Margin="0,0,3,0">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True">
+                        <GridViewColumn Width="340" DisplayMemberBinding="{Binding path}" Header="Ścieżka" />
+                        
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+
     </Grid>
 </Window>

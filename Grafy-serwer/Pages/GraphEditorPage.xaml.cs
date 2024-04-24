@@ -24,6 +24,7 @@ namespace Grafy_serwer.Pages
         private TabControl tabControl;
         GraphStructure graph = new();
 
+
         public GraphEditorPage()
         {
             InitializeComponent();
@@ -40,6 +41,34 @@ namespace Grafy_serwer.Pages
             {
                 tabControl = mainWindow.mainTabControl;
             }
+        }
+        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            // Pobierz skalę Canvas
+            ScaleTransform scaleTransform = canva.LayoutTransform as ScaleTransform;
+            if (scaleTransform == null)
+            {
+                scaleTransform = new ScaleTransform(1, 1);
+                canva.LayoutTransform = scaleTransform;
+            }
+
+            // Określ czynnik zmiany przybliżenia/oddalenia
+            double zoomFactor = 1.2;
+            if (e.Delta > 0)
+            {
+                // Przybliżenie
+                scaleTransform.ScaleX *= zoomFactor;
+                scaleTransform.ScaleY *= zoomFactor;
+            }
+            else
+            {
+                // Oddalenie
+                scaleTransform.ScaleX /= zoomFactor;
+                scaleTransform.ScaleY /= zoomFactor;
+            }
+
+            // Zablokuj propagację zdarzenia
+            e.Handled = true;
         }
         private void Canva_On_Click_Left(object sender, MouseButtonEventArgs e)
         {
