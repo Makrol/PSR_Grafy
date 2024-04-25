@@ -127,19 +127,35 @@ namespace Grafy_serwer.Modals
             }
             
         }
+        private void clearLineChildren()
+        {
+            for (int i = canva.Children.Count - 1; i >= 0; i--)
+            {
+                if (canva.Children[i] is Line)
+                {
+                    canva.Children.RemoveAt(i);
+                }
+            }
+        }
+        private void hideLineChildren()
+        {
+            for (int i = canva.Children.Count - 1; i >= 0; i--)
+            {
+                if (canva.Children[i] is Line)
+                {
+                    ((Line)canva.Children[i]).StrokeThickness=0;
+                       
+                }
+            }
+        }
+
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
             pathOnGraphsList.Clear();
             if (allResultsListView.SelectedItem != null)
             {
-                for (int i = canva.Children.Count - 1; i >= 0; i--)
-                {
-                    if (canva.Children[i] is Line)
-                    {
-                        canva.Children.RemoveAt(i);
-                    }
-                }
+                clearLineChildren();
                 // Pobranie obiektu powiązanego z wybranym rekordem
                 ResultPathRecord selectedObject = (ResultPathRecord)allResultsListView.SelectedItem;
                 ResultRecordPath.Clear();
@@ -182,10 +198,12 @@ namespace Grafy_serwer.Modals
         {
             PathRecord selectedObject = (PathRecord)selectedResult.SelectedItem;
             clearPathToGraph();
-            if (selectedObject.endNode == -1)
+           
+            if (selectedObject==null || selectedObject.endNode == -1)
                 return;
             var selectedNode = localNodes[selectedObject.endNode];
-
+            //clearLineChildren();
+            hideLineChildren();
             drawPathToNode(selectedNode);
 
             if (lastClickedNode != null)
@@ -216,6 +234,18 @@ namespace Grafy_serwer.Modals
             return line;
         }
         private void clearPathToGraph()
+        {
+            //przywracanie orginalnego koloru ścieżki do poprzednio zaznaczonego węzła
+            if (selectetPathOnGraph != null)
+            {
+                foreach (var pathPart in selectetPathOnGraph.pathParts)
+                {
+                    pathPart.StrokeThickness = 2;
+                    pathPart.Stroke = lastSelectetPathOnGraphColor;
+                }
+            }
+        }
+        private void hidePathToGraph()
         {
             //przywracanie orginalnego koloru ścieżki do poprzednio zaznaczonego węzła
             if (selectetPathOnGraph != null)

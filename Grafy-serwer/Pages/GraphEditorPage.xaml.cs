@@ -237,7 +237,7 @@ namespace Grafy_serwer.Pages
                 MessageBox.Show($"Wystąpił błąd podczas wczytywania danych: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void Generate_Graph(object sender, RoutedEventArgs e)
+        private void Generate_Graph_Random(object sender, RoutedEventArgs e)
         {
             Random rand = new();
 
@@ -263,7 +263,7 @@ namespace Grafy_serwer.Pages
 
             }
             // Generowanie krawędzi
-            if (true)
+            if (false)
             {
                 
                 var edgesIndexes = BarabásiAlbert.createEdges(3, 2, nodes.Count);
@@ -301,6 +301,46 @@ namespace Grafy_serwer.Pages
             
 
         }
+        private void Generate_Graph_Albert(object sender, RoutedEventArgs e)
+        {
+            Random rand = new();
+
+            nodes.Clear();
+            canva.Children.Clear();
+            graph.edgeEndpoints.Clear();
+            graph.nodePositions.Clear();
+            GenerateGraphWindow window = new();
+            window.ShowDialog();
+
+
+            int numNodes = int.Parse(window.Nodes.Text);
+            int maxEdges = numNodes * (numNodes - 1) / 2;
+            double percent = window.Percent.Value;
+            int maxEdgesPercent = (int)(maxEdges * percent / 100);
+            // Generowanie węzłów
+            for (int i = 0; i < numNodes; i++)
+            {
+                int x = rand.Next(0, int.Parse(window.X.Text));
+                int y = rand.Next(0, int.Parse(window.Y.Text));
+                graph.nodePositions.Add(new Point(x, y));
+                createNodeOnWorkspace(new Point(x, y));
+
+            }
+            var edgesIndexes = BarabásiAlbert.createEdges(3, 2, nodes.Count);
+            //var edgesIndexes = BarabásiAlbert.createEdgesWithPercents(3, 2, nodes.Count,percent/ 1000);
+
+            foreach (var edge in edgesIndexes)
+            {
+                int startNode = edge.Item1;
+                int endNode = edge.Item2;
+                graph.edgeEndpoints.Add(edge);
+                Ellipse first = nodes[startNode].ellipse;
+                Ellipse second = nodes[endNode].ellipse;
+                createEdgeOnWorkspace(first, second);
+            }
+
+        }
+
         private GraphStructure Generate_Saveable_Graph()
         {
             GraphStructure graphStructure = new GraphStructure();

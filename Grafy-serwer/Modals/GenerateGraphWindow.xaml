@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Grafy_serwer.Modals"
         mc:Ignorable="d"
-        Title="GenerateGraphWindow" Height="450" Width="800">
-    <Grid>
+        Title="GenerateGraphWindow" Height="352" Width="373">
+    <Grid Height="327" VerticalAlignment="Top" HorizontalAlignment="Left" Width="363">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -44,10 +45,11 @@
                  PreviewTextInput="NumericInputOnly"
                  x:Name="Nodes"/>
         <DockPanel Grid.Row="7" VerticalAlignment="Center" Margin="10">
-            <TextBox  Text="{Binding ElementName=Percent, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
+            <TextBox  Text="{Binding ElementName=Percent, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" x:Name="TextPercent" TextAlignment="Right" Width="40" />
             <Slider  Minimum="1" Maximum="100" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="Percent" />
         </DockPanel>
         <Button Grid.Row="8" Margin="10" Width="100" Height="30" Content="Zamknij" Click="CloseButtonClick"/>
+
 
     </Grid>
 </Window>

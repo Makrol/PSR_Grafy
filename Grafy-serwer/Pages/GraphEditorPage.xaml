@@ -48,7 +48,8 @@
                     <Rectangle Style="{StaticResource OutgoingLine}"/>
 
                     <TextBlock Style="{StaticResource CustomTextBlockHeader}" Text="Sekcja tworzenia grafu"/>
-                    <Button  Style="{StaticResource ButtonStyle}" Content="Generuj graf" Click="Generate_Graph"/>
+                    <Button  Style="{StaticResource ButtonStyle}" Content="Losowo" Click="Generate_Graph_Random"/>
+                    <Button  Style="{StaticResource ButtonStyle}" Content="Barbasi-Albert" Click="Generate_Graph_Albert"/>
                 </StackPanel>
                 <StackPanel Background="White" Grid.Row="2">
                     <Rectangle Style="{StaticResource OutgoingLine}"/>

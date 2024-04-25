@@ -44,6 +44,7 @@ namespace Grafy_serwer.Pages
         {
             clientsStreams.Clear();
             returnObjectsList.Clear();
+            ResultsRecords.Clear();
             MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
             if (mainWindow != null)
             {
@@ -63,13 +64,20 @@ namespace Grafy_serwer.Pages
                     // Zatrzymaj nasłuchiwanie serwera
                     listener.Stop();
                     Debug.WriteLine("Serwer został zatrzymany.");
-
+                    foreach (TcpClient client in clients)
+                    {
+                        client.Close();
+                    }
+                    foreach( var stream in clientsStreams)
+                    {
+                        stream.Close();
+                    }
                     // Zamknij wszystkie połączenia klientów
-                    foreach (Thread clientThread in clientThreads)
+                   /* foreach (Thread clientThread in clientThreads)
                     {
                         clientThread.Abort(); // Przerwij wątek klienta
                     }
-                    clientThreads.Clear(); // Wyczyść listę wątków klientów
+                    clientThreads.Clear();*/ // Wyczyść listę wątków klientów
                 }
             }
             catch (Exception ex)
@@ -194,6 +202,10 @@ namespace Grafy_serwer.Pages
                     }
                     else
                     {
+                        Dispatcher.Invoke(() =>
+                        {
+                            nodeProgres = 0;
+                        });
                         break;
                     }
                         
@@ -240,7 +252,7 @@ namespace Grafy_serwer.Pages
             if (nodeProgres >= nodes.Count)
                 return null;
             var sendObject = new SendObject();
-            sendObject.matrix = matrix.matrix;
+            sendObject.matrix = null;
             for (int j = 0; j < nodeInPackage; j++)
             {
                 if (nodeProgres > nodes.Count - 1)

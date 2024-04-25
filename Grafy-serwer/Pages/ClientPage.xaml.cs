@@ -30,6 +30,7 @@ namespace Grafy_serwer.Pages
         public NetworkStream stream;
         private TabControl tabControl;
         private Thread clientThread;
+        public static List<List<int>> matrix = null;
         public ClientPage()
         {
             InitializeComponent();
@@ -75,6 +76,7 @@ namespace Grafy_serwer.Pages
 
         private void StartClientThread(object obj)
         {
+            bool isClientEnd = false;
             try
             {
                 string serverIP = "";
@@ -109,7 +111,9 @@ namespace Grafy_serwer.Pages
                         
                         while(true)
                         {
-
+                            isClientEnd=handleServertDisconect(client);
+                            if (isClientEnd)
+                                break;
                             bytesRead = stream.Read(tmpResponseData, totalBytesRead, bufferSize);
                             totalBytesRead+= bytesRead;
                             string tmpS = Encoding.UTF8.GetString(tmpResponseData);
@@ -121,6 +125,8 @@ namespace Grafy_serwer.Pages
                             Array.Resize(ref tmpResponseData, initBufferSize);
 
                         }
+                        if (isClientEnd)
+                            break;
                         returnObject.receiveTime = DateTime.Now;
                         byte[] responseData = new byte[totalBytesRead];
                         Array.Copy(tmpResponseData, responseData, totalBytesRead);
@@ -129,13 +135,15 @@ namespace Grafy_serwer.Pages
                         SendObject recievedObject = JsonSerializer.Deserialize<SendObject>(stringData);
                         if (recievedObject == null)
                             continue;
+                        if (ClientPage.matrix == null)
+                            ClientPage.matrix = recievedObject.matrix;
                        // MessageBox.Show("KLient otrzymał pakiet danych", "Otrzymano dane", MessageBoxButton.OK, MessageBoxImage.Information);
                         Dispatcher.Invoke(() => { clientStstus.Text = "Status: wykonuje obliczenia"; });
 
                         returnObject.beginTime = DateTime.Now;
                         foreach (var index in recievedObject.nodeIndexes)
                         {
-                            returnObject.results.Add(Dijkstra.determineSolution(recievedObject.matrix, index,recievedObject.matrix.Count));
+                            returnObject.results.Add(Dijkstra.determineSolution(ClientPage.matrix, index, ClientPage.matrix.Count));
                         }
                         returnObject.endTime = DateTime.Now;
 
@@ -162,8 +170,25 @@ namespace Grafy_serwer.Pages
                 Console.WriteLine("Błąd: " + ex.Message);
             }
             Dispatcher.Invoke(() => { tabControl.SelectedIndex = 0; });
+            ClientPage.matrix = null;
 
             
+        }
+        private bool handleServertDisconect(TcpClient client)
+        {
+            if (client.Client.Poll(0, SelectMode.SelectRead) && client.Client.Available == 0)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    /*ConnectedClientsRecords.Remove(newCliendRecord);
+                    clients.Remove(client);
+                    clientsStreams.Remove(stream);
+                    connectedClientsCounter--;*/
+                });
+                MessageBox.Show("Utracono połączenie z serwerem","Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return true;
+            }
+            return false;
         }
     }
 }
