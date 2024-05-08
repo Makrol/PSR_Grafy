@@ -1,6 +1,7 @@
 ﻿using Grafy_serwer.Modals;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -182,9 +183,9 @@ namespace Grafy_serwer.Pages
                         ResultsRecords.Add(new ResultRecord
                         {
                             ClientName = clientIP + ":" + clientPort,
-                            RecieveDate = recievedObject.receiveTime.ToString(),
-                            BeginDate = recievedObject.beginTime.ToString(),
-                            EndDate = recievedObject.endTime.ToString(),
+                            RecieveDate = recievedObject.receiveTime.ToString("HH:mm:ss.fff"),
+                            BeginDate = recievedObject.beginTime.ToString("HH:mm:ss.fff"),
+                            EndDate = recievedObject.endTime.ToString("HH:mm:ss.fff"),
                             result = recievedObject
                         });
                     });
@@ -384,6 +385,37 @@ namespace Grafy_serwer.Pages
                 return true;
             }
             return false;
+        }
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Utwórz nowy plik CSV lub nadpisz istniejący
+                string filePath = "ścieżka_do_twojego_pliku.csv";
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    // Nagłówki kolumn
+                    writer.WriteLine("Clients,RecieveDate,BegineDate,EndDate");
+
+                    // Dla każdego rekordu w liście zapisz dane do pliku CSV
+
+
+                    foreach (var record in ResultsRecords)
+                    {
+                        // Tworzenie wiersza CSV z danych rekordu
+                        string line = $"{record.ClientName},{record.RecieveDate},{record.BeginDate},{record.EndDate}";
+
+                        // Zapisz wiersz do pliku
+                        writer.WriteLine(line);
+                    }
+
+                    MessageBox.Show("Dane zostały zapisane do pliku CSV.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas zapisywania danych: {ex.Message}");
+            }
         }
     }
 }

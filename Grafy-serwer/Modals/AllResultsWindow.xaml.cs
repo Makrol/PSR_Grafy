@@ -3,6 +3,7 @@ using Grafy_serwer.RecordsTemplates;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,9 +89,9 @@ namespace Grafy_serwer.Modals
                     ResultsRecords.Add(new ResultPathRecord
                     {
                         Clients = returnObject.client,
-                        RecieveDate = returnObject.receiveTime.ToString(),
-                        BegineDate = results.beginCalculation.ToString(),
-                        EndDate = results.endCalculations.ToString(),
+                        RecieveDate = returnObject.receiveTime.ToString("HH:mm:ss.fff"),
+                        BegineDate = results.beginCalculation.ToString("HH:mm:ss.fff"),
+                        EndDate = results.endCalculations.ToString("HH:mm:ss.fff"),
                         Path = results.PathToString(),
                         Paths = results.PathToList(),
                         Distance = results.sum.ToString(),
@@ -292,6 +293,38 @@ namespace Grafy_serwer.Modals
                 lastClickedNode.Fill = Brushes.Red;
             }
             lastClickedNode = tmpElipse;
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Utwórz nowy plik CSV lub nadpisz istniejący
+                string filePath = "ścieżka_do_twojego_pliku.csv";
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    // Nagłówki kolumn
+                    writer.WriteLine("Clients,RecieveDate,BegineDate,EndDate,Distance,StartNode,Path");
+
+                    // Dla każdego rekordu w liście zapisz dane do pliku CSV
+
+
+                    foreach (var record in ResultsRecords)
+                    {
+                        // Tworzenie wiersza CSV z danych rekordu
+                        string line = $"{record.Clients},{record.RecieveDate},{record.BegineDate},{record.EndDate},{record.Distance},{record.StartNode},{record.Path}";
+
+                        // Zapisz wiersz do pliku
+                        writer.WriteLine(line);
+                    }
+
+                    MessageBox.Show("Dane zostały zapisane do pliku CSV.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas zapisywania danych: {ex.Message}");
+            }
         }
 
     }
