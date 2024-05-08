@@ -1,5 +1,6 @@
 ﻿using Grafy_serwer.Pages;
 using Grafy_serwer.RecordsTemplates;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -299,26 +300,23 @@ namespace Grafy_serwer.Modals
         {
             try
             {
-                // Utwórz nowy plik CSV lub nadpisz istniejący
-                string filePath = "ścieżka_do_twojego_pliku.csv";
-                using (StreamWriter writer = new StreamWriter(filePath))
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Pliki CSV (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    // Nagłówki kolumn
-                    writer.WriteLine("Clients,RecieveDate,BegineDate,EndDate,Distance,StartNode,Path");
+                    string filePath = saveFileDialog.FileName;
 
-                    // Dla każdego rekordu w liście zapisz dane do pliku CSV
-
-
-                    foreach (var record in ResultsRecords)
+                    using (StreamWriter writer = new StreamWriter(filePath))
                     {
-                        // Tworzenie wiersza CSV z danych rekordu
-                        string line = $"{record.Clients},{record.RecieveDate},{record.BegineDate},{record.EndDate},{record.Distance},{record.StartNode},{record.Path}";
+                        writer.WriteLine("Clients,RecieveDate,BegineDate,EndDate,Distance,StartNode,Path");
+                        foreach (var record in ResultsRecords)
+                        {
+                            string line = $"{record.Clients},{record.RecieveDate},{record.BegineDate},{record.EndDate},{record.Distance},{record.StartNode},{record.Path}";
+                            writer.WriteLine(line);
+                        }
 
-                        // Zapisz wiersz do pliku
-                        writer.WriteLine(line);
+                        MessageBox.Show("Dane zostały zapisane do pliku CSV.");
                     }
-
-                    MessageBox.Show("Dane zostały zapisane do pliku CSV.");
                 }
             }
             catch (Exception ex)

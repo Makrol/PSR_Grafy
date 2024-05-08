@@ -9,6 +9,7 @@ namespace Grafy_serwer
 {
     public class CliendRecord : INotifyPropertyChanged
     {
+        public long timeSum = 0;
         private int _count;
         public int Count
         {
@@ -19,6 +20,19 @@ namespace Grafy_serwer
                 {
                     _count = value;
                     OnPropertyChanged(nameof(Count));
+                }
+            }
+        }
+        private long _AvarageTime;
+        public long AvarageTime
+        {
+            get { return _AvarageTime; }
+            set
+            {
+                if (_AvarageTime != value)
+                {
+                    _AvarageTime = value;
+                    OnPropertyChanged(nameof(AvarageTime));
                 }
             }
         }

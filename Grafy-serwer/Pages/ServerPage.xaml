@@ -11,8 +11,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="129*"/>
+            <ColumnDefinition Width="71*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="19*"/>
@@ -27,10 +27,10 @@
         <ListView x:Name="resultListView" Grid.Column="0" Grid.Row="1">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn DisplayMemberBinding="{Binding ClientName}" Header="Klient" Width="125"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding RecieveDate}" Header="Odebranie" Width="125"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding BeginDate}" Header="Rozpoczęcie" Width="125"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończenie" Width="125"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ClientName}" Header="Klient" Width="110"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding RecieveDate}" Header="Odebranie" Width="110"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding BeginDate}" Header="Rozpoczęcie" Width="110"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończenie" Width="110"/>
                     <GridViewColumn Header="Akcje" Width="70">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -44,12 +44,13 @@
         </ListView>
 
 
-        <ListView x:Name="listView" Grid.Column="1" Grid.Row="1">
+        <ListView x:Name="listView" Grid.Row="1" Margin="1,0,0,0" Grid.Column="1">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridViewColumn DisplayMemberBinding="{Binding IPAddress}" Header="Adres ip" Width="70" />
                     <GridViewColumn DisplayMemberBinding="{Binding Port}" Header="Port" Width="60" />
                     <GridViewColumn DisplayMemberBinding="{Binding Count}" Header="Ilość akcji" Width="60" />
+                    <GridViewColumn DisplayMemberBinding="{Binding AvarageTime}" Header="Średni czas (ms)" Width="90" />
                 </GridView>
             </ListView.View>
 

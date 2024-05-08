@@ -1,4 +1,5 @@
 ﻿using Grafy_serwer.Modals;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -32,6 +33,7 @@ namespace Grafy_serwer.Pages
         private List<ReturnObject> returnObjectsList = new List<ReturnObject> ();
         private int nodeProgres = 0;
         static public int packageSize = -1;
+        private object lockPackageGenerator = new object();
         public ServerPage()
         {
             InitializeComponent();
@@ -171,6 +173,13 @@ namespace Grafy_serwer.Pages
 
                     if (isClientEnd)
                         break;
+
+                    SendObject objectToSend;
+                    lock (lockPackageGenerator)
+                    {
+                        objectToSend = generateNewSendObject(ServerPage.packageSize);
+                    }
+
                     byte[] responseData = new byte[totalBytesRead];
                     Array.Copy(tmpResponseData, responseData, totalBytesRead);
                     string stringData = Encoding.UTF8.GetString(responseData);
@@ -191,11 +200,15 @@ namespace Grafy_serwer.Pages
                     });
 
                     //MessageBox.Show("Odebrano wyniki obliczeń od klienta w ilości "+recievedObject.results.Count, "Odebrani wyniki", MessageBoxButton.OK, MessageBoxImage.Information);
-                    var objectToSend = generateNewSendObject(ServerPage.packageSize);
+                    
+                    
                     if (objectToSend != null)
                     {
                         Dispatcher.Invoke(() => {
-                            ConnectedClientsRecords.First(row => row.IPAddress == newClientRecord.IPAddress && row.Port == newClientRecord.Port).Count++;
+                            var clientRow = ConnectedClientsRecords.First(row => row.IPAddress == newClientRecord.IPAddress && row.Port == newClientRecord.Port);
+                            clientRow.Count++;
+                            clientRow.timeSum += (long)(recievedObject.endTime - recievedObject.beginTime).TotalMilliseconds;
+                            clientRow.AvarageTime = clientRow.timeSum/clientRow.Count;
                         });
                       //  newClientRecord.Count++;
 
@@ -239,7 +252,11 @@ namespace Grafy_serwer.Pages
             {
                 listener.Stop();
                 calculationButton.IsEnabled=false;
-                var sendableObjects = generateInitSendObjects(packageSize);
+                List<SendObject> sendableObjects = null;
+                lock (lockPackageGenerator){
+                    sendableObjects = generateInitSendObjects(packageSize);
+                }
+                
                 sendObjectsToAll(sendableObjects);
                 
             }
@@ -390,26 +407,23 @@ namespace Grafy_serwer.Pages
         {
             try
             {
-                // Utwórz nowy plik CSV lub nadpisz istniejący
-                string filePath = "ścieżka_do_twojego_pliku.csv";
-                using (StreamWriter writer = new StreamWriter(filePath))
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Pliki CSV (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    // Nagłówki kolumn
-                    writer.WriteLine("Clients,RecieveDate,BegineDate,EndDate");
+                    string filePath = saveFileDialog.FileName;
 
-                    // Dla każdego rekordu w liście zapisz dane do pliku CSV
-
-
-                    foreach (var record in ResultsRecords)
+                    using (StreamWriter writer = new StreamWriter(filePath))
                     {
-                        // Tworzenie wiersza CSV z danych rekordu
-                        string line = $"{record.ClientName},{record.RecieveDate},{record.BeginDate},{record.EndDate}";
+                        writer.WriteLine("Clients,RecieveDate,BegineDate,EndDate");
+                        foreach (var record in ResultsRecords)
+                        {
+                            string line = $"{record.ClientName},{record.RecieveDate},{record.BeginDate},{record.EndDate}";
+                            writer.WriteLine(line);
+                        }
 
-                        // Zapisz wiersz do pliku
-                        writer.WriteLine(line);
+                        MessageBox.Show("Dane zostały zapisane do pliku CSV.");
                     }
-
-                    MessageBox.Show("Dane zostały zapisane do pliku CSV.");
                 }
             }
             catch (Exception ex)
@@ -417,5 +431,6 @@ namespace Grafy_serwer.Pages
                 MessageBox.Show($"Wystąpił błąd podczas zapisywania danych: {ex.Message}");
             }
         }
+
     }
 }
