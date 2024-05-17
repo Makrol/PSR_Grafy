@@ -176,6 +176,7 @@ namespace Grafy_serwer.Pages
         private void Bact(object sender, RoutedEventArgs e)
         {
             tabControl.SelectedIndex = 0;
+            ServerPage.serverT.stop() ;
         }
         public static List<Node> getGrapfNodes()
         {

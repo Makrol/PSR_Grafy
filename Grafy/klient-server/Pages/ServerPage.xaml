@@ -43,20 +43,11 @@
 
         </ListView>
 
+        <Frame Grid.Column="1" Source="./ClientListPage.xaml" Grid.RowSpan="2"/>
 
-        <ListView x:Name="listView" Grid.Row="1" Margin="1,0,0,0" Grid.Column="1">
-            <ListView.View>
-                <GridView AllowsColumnReorder="True">
-                    <GridViewColumn DisplayMemberBinding="{Binding IPAddress}" Header="Adres ip" Width="70" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Port}" Header="Port" Width="60" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Count}" Header="Ilość akcji" Width="60" />
-                    <GridViewColumn DisplayMemberBinding="{Binding AvarageTime}" Header="Średni czas (ms)" Width="90" />
-                </GridView>
-            </ListView.View>
-
-        </ListView>
+        
         <Border Background="#dedede" Grid.Column="1" Grid.Row="2" >
-            <Button Style="{StaticResource ButtonStyle}" Content="Wyłącz serwer" Click="CloseServer"/>
+            <Button x:Name="ServerBackButton" Style="{StaticResource ButtonStyle}" Content="Powrót" Click="Back"/>
         </Border>
         <Border  Background="#dedede" Grid.Column="0" Grid.Row="2" >
             <Grid>

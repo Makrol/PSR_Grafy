@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grafy_serwer.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,7 @@ namespace Grafy_serwer.Windows
         private void SelectServer(object sender, RoutedEventArgs e)
         {
             tabControl.SelectedIndex = 1;
+            ServerPage.serverT.start();
         }
         private void SelectClient(object sender, RoutedEventArgs e)
         {

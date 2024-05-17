@@ -23,11 +23,13 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="91*"/>
+                <ColumnDefinition Width="137*"/>
+                <ColumnDefinition Width="513*"/>
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
-            <Canvas  x:Name="canva" Background="#D9D9D9" Grid.Column="0" MouseWheel="Canvas_MouseWheel"/>
-            <Grid Grid.Column="1" Panel.ZIndex="10000">
+            <Frame Grid.Column="0" Source="./ClientListPage.xaml"/>
+            <Canvas  x:Name="canva" Background="#D9D9D9" Grid.Column="1" MouseWheel="Canvas_MouseWheel"/>
+            <Grid Grid.Column="2" Panel.ZIndex="10000">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
