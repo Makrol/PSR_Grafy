@@ -39,11 +39,8 @@ namespace klient_server.Threads
         {
             bool isClientEnd = false;
             tcpClient = (TcpClient)obj;
-            //clients.Add(client);
             stream = tcpClient.GetStream();
-            //clientsStreams.Add(stream);
 
-            //connectedClientsCounter++;
             clientIP = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address.ToString();
             clientPort = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port;
             var newClientRecord = new CliendRecord { IPAddress = clientIP, Port = clientPort, Count = 0 };
@@ -51,6 +48,7 @@ namespace klient_server.Threads
             {
                 ClientListPage.ConnectedClientsRecords.Add(newClientRecord);
             });
+
             try
             {
                 while (true)
@@ -61,15 +59,14 @@ namespace klient_server.Threads
                     int bytesRead = 0;
                     int totalBytesRead = 0;
 
-                    //odczytywanie odpowiedzi
+                    // Odczytywanie odpowiedzi
                     while (true)
                     {
                         isClientEnd = handleClientDisconect(tcpClient, stream, newClientRecord, clientIP, clientPort);
                         if (isClientEnd)
                             break;
+
                         bytesRead = stream.Read(tmpResponseData, totalBytesRead, bufferSize);
-                        // if (totalBytesRead == 0 && bytesRead == 0)
-                        //   break;
                         totalBytesRead += bytesRead;
                         string tmpS = Encoding.UTF8.GetString(tmpResponseData);
                         if (tmpS.Contains("END"))
@@ -86,57 +83,91 @@ namespace klient_server.Threads
                     byte[] responseData = new byte[totalBytesRead];
                     Array.Copy(tmpResponseData, responseData, totalBytesRead);
                     string stringData = Encoding.UTF8.GetString(responseData);
+                    string tmptest = Encoding.UTF8.GetString(responseData);
                     stringData = stringData[..^5];
 
-                    ReturnObject recievedObject = JsonSerializer.Deserialize<ReturnObject>(stringData);
-                    recievedObject.client = clientIP + ":" + clientPort;
-                    ServerPage.addReturnObjectToList(recievedObject);
-                    Application.Current.Dispatcher.Invoke(() => {
-                        ServerPage.ResultsRecords.Add(new ResultRecord
+                    if (!IsValidJson(stringData))
+                        stringData += "}";
+                    // Walidacja ciągu JSON przed deserializacją
+                    if (IsValidJson(stringData))
+                    {
+                        try
                         {
-                            ClientName = clientIP + ":" + clientPort,
-                            RecieveDate = recievedObject.receiveTime.ToString("HH:mm:ss.fff"),
-                            BeginDate = recievedObject.beginTime.ToString("HH:mm:ss.fff"),
-                            EndDate = recievedObject.endTime.ToString("HH:mm:ss.fff"),
-                            result = recievedObject
-                        });
-                    });
+                            ReturnObject recievedObject = JsonSerializer.Deserialize<ReturnObject>(stringData);
+                            recievedObject.client = clientIP + ":" + clientPort;
+                            ServerPage.addReturnObjectToList(recievedObject);
 
-                        Application.Current.Dispatcher.Invoke(() => {
-                            CliendRecord clientRow = null;
-                            foreach (var row in ClientListPage.ConnectedClientsRecords)
-                            {
-                                if (row.IPAddress == newClientRecord.IPAddress && row.Port == newClientRecord.Port)
+                            Application.Current.Dispatcher.Invoke(() => {
+                                ServerPage.ResultsRecords.Add(new ResultRecord
                                 {
-                                    clientRow = row; break;
+                                    ClientName = clientIP + ":" + clientPort,
+                                    RecieveDate = recievedObject.receiveTime.ToString("HH:mm:ss.fff"),
+                                    BeginDate = recievedObject.beginTime.ToString("HH:mm:ss.fff"),
+                                    EndDate = recievedObject.endTime.ToString("HH:mm:ss.fff"),
+                                    result = recievedObject
+                                });
+                            });
+
+                            Application.Current.Dispatcher.Invoke(() => {
+                                CliendRecord clientRow = null;
+                                foreach (var row in ClientListPage.ConnectedClientsRecords)
+                                {
+                                    if (row.IPAddress == newClientRecord.IPAddress && row.Port == newClientRecord.Port)
+                                    {
+                                        clientRow = row; break;
+                                    }
                                 }
-                            }
-                            //clientRow = ConnectedClientsRecords.First(row => row.IPAddress == newClientRecord.IPAddress && row.Port == newClientRecord.Port);
-                            if (clientRow != null)
-                            {
-                                clientRow.Count++;
-                                clientRow.timeSum += (long)(recievedObject.endTime - recievedObject.beginTime).TotalMilliseconds;
-                                clientRow.AvarageTime = clientRow.timeSum / clientRow.Count;
-                            }
+                                if (clientRow != null)
+                                {
+                                    clientRow.Count++;
+                                    clientRow.timeSum += (long)(recievedObject.endTime - recievedObject.beginTime).TotalMilliseconds;
+                                    clientRow.AvarageTime = clientRow.timeSum / clientRow.Count;
+                                }
+                            });
 
-                        });
-                    ServerThread.generateAndSendNextPackage(stream);
-
-                   
-
+                            ServerThread.generateAndSendNextPackage(stream);
+                        }
+                        catch (JsonException jsonEx)
+                        {
+                            Console.WriteLine($"Błąd deserializacji JSON: {jsonEx.Message}");
+                            Console.WriteLine($"Ciąg JSON: {stringData}");
+                            MessageBox.Show($"Błąd deserializacji JSON: {jsonEx.Message}", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        //Console.WriteLine($"Nieprawidłowy ciąg JSON: {stringData}");
+                        //MessageBox.Show($"Nieprawidłowy ciąg JSON: {stringData}", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("invalid JSON", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
                 stream.Close();
                 tcpClient.Close();
-
             }
         }
+
+        private bool IsValidJson(string jsonString)
+        {
+            try
+            {
+                var json = JsonDocument.Parse(jsonString);
+                return true;
+            }
+            catch (JsonException)
+            {
+                
+                return false;
+            }
+        }
+
         private bool handleClientDisconect(TcpClient client, NetworkStream stream, CliendRecord newCliendRecord, string ip, int port)
         {
             if (client.Client.Poll(0, SelectMode.SelectRead) && client.Client.Available == 0)

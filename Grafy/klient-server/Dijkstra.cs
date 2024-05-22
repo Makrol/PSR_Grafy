@@ -15,7 +15,8 @@ namespace Grafy_serwer
         {
             DateTime begin = DateTime.Now;
             int[] distance = new int[size];
-            int[] parent = new int[size]; 
+            int[] parent = new int[size];
+
 
             bool[] shortestPathSet = new bool[size]; 
 
@@ -77,7 +78,8 @@ namespace Grafy_serwer
                 CreatePath(parent, i,pathForNode);
                 returnObject.paths.Add(pathForNode);
                 returnObject.nodeDistances.Add(distance[i]);
-                sum += distance[i];
+                if (distance[i] >0)
+                    sum += distance[i];
             }
             returnObject.sum = sum;
             return returnObject;

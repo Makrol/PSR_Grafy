@@ -120,7 +120,11 @@ namespace klient_server.Threads
             catch (IOException ex) when ((ex.InnerException as SocketException)?.SocketErrorCode == SocketError.ConnectionReset)
             {
                 //Dispatcher.Invoke(() => { clientStstus.Text = "Status: rozłączony"; });
-                MessageBox.Show("Serwer zresetował połączenie.", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //MessageBox.Show("Serwer zresetował połączenie.", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Serwer zresetował połączenie. Szczegóły: {ex.Message}", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                var innerExceptionMessage = ex.InnerException?.Message ?? "Brak dodatkowych informacji";
+                MessageBox.Show($"Serwer zresetował połączenie. Szczegóły: {ex.Message}\nWewnętrzny wyjątek: {innerExceptionMessage}", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {

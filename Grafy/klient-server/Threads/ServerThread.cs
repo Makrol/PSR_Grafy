@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Text.Json;
 using klient_server.Pages;
 using System.IO;
+using klient_server.Dto;
 
 namespace klient_server.Threads
 {
@@ -129,11 +130,19 @@ namespace klient_server.Threads
         }
         private static void sendObjectsToAll(List<SendObject> objectsList)
         {
+            List<Thread> threads = new List<Thread>();
             for (int i = 0; i < objectsList.Count; i++)
             {
-                // ConnectedClientsRecords[i].Count++;
-                sendObject(objectsList[i], handleClientList[i].stream);
+                Thread thread = new Thread(new ParameterizedThreadStart(initSendThread));
+                thread.Start(new ObjectAndStreamDto(objectsList[i], handleClientList[i].stream) );
             }
+        }
+        private static void initSendThread(object obj)
+        {
+            var dtoObject = (ObjectAndStreamDto)obj;
+            var serializedData = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(dtoObject.obj));
+            dtoObject.stream.Write(serializedData);
+            dtoObject.stream.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));
         }
         private static void sendObject(SendObject obj, NetworkStream stream)
         {
@@ -149,8 +158,12 @@ namespace klient_server.Threads
                 objectToSend = generateNewSendObject(packageSize);
             }
             if(objectToSend==null)
+            {
+                MessageBox.Show("", "Koniec", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 ServerPage.unlockButtons();
-            sendObject(objectToSend, stream);
+            }
+            else
+                sendObject(objectToSend, stream);
         }
         private static SendObject generateNewSendObject(int nodeInPackage)
         {
