@@ -75,11 +75,12 @@ namespace Grafy_serwer.Modals
         }
         private void ModalWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            var tmpList = new List<ResultPathRecord>();
             foreach(var returnObject in returnObjectsList)
             {
                 foreach(var results in returnObject.results)
                 {
-                    var endNode = new List<int>();
+                    /*var endNode = new List<int>();
                     foreach(var path in results.paths)
                     {
                         if(path.Count!=0)
@@ -99,11 +100,35 @@ namespace Grafy_serwer.Modals
                         IndexPaths = results.paths,
                         StartNode = results.startNode.ToString(),
                         EndNode = endNode
+                    });*/
+                    var endNode = new List<int>();
+                    foreach (var path in results.paths)
+                    {
+                        if (path.Count != 0)
+                            endNode.Add(path[path.Count - 1]);
+                        else
+                            endNode.Add(-1);
+                    }
+                    tmpList.Add(new ResultPathRecord
+                    {
+                        Clients = returnObject.client,
+                        RecieveDate = returnObject.receiveTime.ToString("HH:mm:ss.fff"),
+                        BegineDate = results.beginCalculation.ToString("HH:mm:ss.fff"),
+                        EndDate = results.endCalculations.ToString("HH:mm:ss.fff"),
+                        Path = results.PathToString(),
+                        Paths = results.PathToList(),
+                        Distance = results.sum.ToString(),
+                        IndexPaths = results.paths,
+                        StartNode = results.startNode.ToString(),
+                        EndNode = endNode
                     });
-                    
                     
                 }
                 
+            }
+            var newList = tmpList.OrderBy(record => double.Parse(record.Distance));
+            foreach(var result in newList) {
+                ResultsRecords.Add(result);
             }
             ResultsRecords = new ObservableCollection<ResultPathRecord>(ResultsRecords.OrderBy(r => r.Distance));
             Generate_Graph();
