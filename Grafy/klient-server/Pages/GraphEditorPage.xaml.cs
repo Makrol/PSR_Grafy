@@ -8,6 +8,7 @@ using System.Text.Json;
 using Grafy_serwer.Modals;
 using System.Collections.Generic;
 using System;
+using klient_server.Modals;
 
 
 namespace Grafy_serwer.Pages
@@ -266,42 +267,20 @@ namespace Grafy_serwer.Pages
 
             }
             // Generowanie krawędzi
-            if (false)
+            for (int i = 0; i < maxEdgesPercent;)
             {
-                
-                var edgesIndexes = BarabásiAlbert.createEdges(3, 2, nodes.Count);
-                //var edgesIndexes = BarabásiAlbert.createEdgesWithPercents(3, 2, nodes.Count,percent/ 1000);
+                int startNode = rand.Next(0, numNodes);
+                int endNode = rand.Next(0, numNodes);
 
-                foreach (var edge in edgesIndexes)
+                if (startNode != endNode && !graph.IsEdgeUsed(startNode, endNode))
                 {
-                    int startNode = edge.Item1;
-                    int endNode = edge.Item2;
-                    graph.edgeEndpoints.Add(edge);
+                    graph.edgeEndpoints.Add(new Tuple<int, int>(startNode, endNode));
                     Ellipse first = nodes[startNode].ellipse;
                     Ellipse second = nodes[endNode].ellipse;
                     createEdgeOnWorkspace(first, second);
+                    i++;
                 }
-            }
-            else
-            {
-                for (int i = 0; i < maxEdgesPercent;)
-                {
-                    int startNode = rand.Next(0, numNodes);
-                    int endNode = rand.Next(0, numNodes);
-
-                    if (startNode != endNode && !graph.IsEdgeUsed(startNode, endNode))
-                    {
-                        graph.edgeEndpoints.Add(new Tuple<int, int>(startNode, endNode));
-                        Ellipse first = nodes[startNode].ellipse;
-                        Ellipse second = nodes[endNode].ellipse;
-                        createEdgeOnWorkspace(first, second);
-                        i++;
-                    }
-                }
-            }
-            
-            
-            
+            }   
 
         }
         private void Generate_Graph_Albert(object sender, RoutedEventArgs e)
@@ -312,14 +291,12 @@ namespace Grafy_serwer.Pages
             canva.Children.Clear();
             graph.edgeEndpoints.Clear();
             graph.nodePositions.Clear();
-            GenerateGraphWindow window = new();
+            ProceduralGenerateGraphWindow window = new();
             window.ShowDialog();
 
 
             int numNodes = int.Parse(window.Nodes.Text);
             int maxEdges = numNodes * (numNodes - 1) / 2;
-            double percent = window.Percent.Value;
-            int maxEdgesPercent = (int)(maxEdges * percent / 100);
             // Generowanie węzłów
             for (int i = 0; i < numNodes; i++)
             {
@@ -341,7 +318,6 @@ namespace Grafy_serwer.Pages
                 Ellipse second = nodes[endNode].ellipse;
                 createEdgeOnWorkspace(first, second);
             }
-
         }
 
         private GraphStructure Generate_Saveable_Graph()

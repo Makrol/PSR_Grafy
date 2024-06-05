@@ -19,20 +19,21 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="1">
             Podaj do jakiej wartości X będą generować się punkty:
         </TextBlock>
 
-        <TextBox Grid.Row="2" Margin="10" Width="100" Height="30"
+        <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="2" Margin="10" Width="270" Height="30"
                   Text="1000"
                  PreviewTextInput="NumericInputOnly"
                  x:Name="X"/>
         <TextBlock Grid.Row="3">
             Podaj do jakiej wartości Y będą generować się punkty:
         </TextBlock>
-        <TextBox Grid.Row="4" Margin="10" Width="100" Height="30"
+        <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="4" Margin="10" Width="270" Height="30"
                   Text="1000"
                  PreviewTextInput="NumericInputOnly"
                  x:Name="Y"/>
@@ -40,15 +41,18 @@
         <TextBlock Grid.Row="5">
             Podaj liczbę węzłów:
         </TextBlock>
-        <TextBox Grid.Row="6" Margin="10" Width="100" Height="30"
+        <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="6" Margin="10" Width="270" Height="30"
                   Text="50"
                  PreviewTextInput="NumericInputOnly"
                  x:Name="Nodes"/>
-        <DockPanel Grid.Row="7" VerticalAlignment="Center" Margin="10">
+        <TextBlock Grid.Row="7">
+            Podaj procent pokrycia połączeń:
+        </TextBlock>
+        <DockPanel Grid.Row="8" VerticalAlignment="Center" Margin="10">
             <TextBox  Text="{Binding ElementName=Percent, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" x:Name="TextPercent" TextAlignment="Right" Width="40" />
             <Slider  Minimum="1" Maximum="100" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="Percent" />
         </DockPanel>
-        <Button Grid.Row="8" Margin="10" Width="100" Height="30" Content="Zamknij" Click="CloseButtonClick"/>
+        <Button Style="{StaticResource ButtonStyle}" Grid.Row="9" Margin="10" Width="100" Height="30" Content="Zamknij" Click="CloseButtonClick"/>
 
 
     </Grid>
