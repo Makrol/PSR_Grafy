@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,15 @@ namespace klient_server.Pages
                 item.AvarageTime = 0;
                 item.timeSum = 0;
             }
+        }
+        public static void addClient(CliendRecord cliend)
+        {
+            ClientListPage.ConnectedClientsRecords.Add(cliend);
+        }
+        public static void deleteClient(String ip,int port)
+        {
+            var element = ClientListPage.ConnectedClientsRecords.FirstOrDefault(r => (r.IPAddress == ip && r.Port == port));
+            ClientListPage.ConnectedClientsRecords.Remove(element);
         }
     }
 }

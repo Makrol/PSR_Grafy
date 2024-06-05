@@ -46,7 +46,8 @@ namespace klient_server.Threads
             var newClientRecord = new CliendRecord { IPAddress = clientIP, Port = clientPort, Count = 0 };
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ClientListPage.ConnectedClientsRecords.Add(newClientRecord);
+                ///ClientListPage.ConnectedClientsRecords.Add(newClientRecord);
+                ClientListPage.addClient(newClientRecord);
             });
 
             try
@@ -85,6 +86,12 @@ namespace klient_server.Threads
                     string stringData = Encoding.UTF8.GetString(responseData);
                     string tmptest = Encoding.UTF8.GetString(responseData);
                     stringData = stringData[..^5];
+
+
+                    if (stringData.Length > 0 && stringData[0] == '\"')
+                    {
+                        stringData = stringData.Substring(1);
+                    }
 
                     if (!IsValidJson(stringData))
                         stringData += "}";
@@ -125,6 +132,16 @@ namespace klient_server.Threads
                                 }
                             });
 
+                            lock(ServerThread.lockCalculatedPackets)
+                            {
+                                ServerThread.calculatedPackets++;
+                                if(ServerThread.calculatedPackets>=ServerThread.maxPackets)
+                                {
+                                    ServerPage.setEndTime();
+                                    ServerPage.unlockButtons();
+                                }
+                            }
+
                             ServerThread.generateAndSendNextPackage(stream);
                         }
                         catch (JsonException jsonEx)
@@ -145,7 +162,11 @@ namespace klient_server.Threads
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                MessageBox.Show(ex.ToString(), "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show(ex.ToString(), "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ClientListPage.deleteClient(clientIP, clientPort);
+                });
             }
             finally
             {

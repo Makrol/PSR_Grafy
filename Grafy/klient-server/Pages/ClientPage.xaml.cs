@@ -30,7 +30,7 @@ namespace Grafy_serwer.Pages
     {
         public TcpClient client;
         public NetworkStream stream;
-        private TabControl tabControl;
+        public static TabControl tabControl;
         public static List<List<int>> matrix = null;
         private ClientThread clientT = new ClientThread();
         public ClientPage()
@@ -51,14 +51,14 @@ namespace Grafy_serwer.Pages
         {
             try
             {
-                if (stream != null)
+                if (clientT.tcpClient != null)
                 {
-                    stream.Close();
+                    clientT.tcpClient.Close();
                 }
 
-                if (client != null)
+                if (clientT.stream != null)
                 {
-                    client.Close();
+                    clientT.stream.Close();
                 }
             }
             catch (Exception ex)

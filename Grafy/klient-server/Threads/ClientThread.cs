@@ -121,15 +121,15 @@ namespace klient_server.Threads
             {
                 //Dispatcher.Invoke(() => { clientStstus.Text = "Status: rozłączony"; });
                 //MessageBox.Show("Serwer zresetował połączenie.", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                MessageBox.Show($"Serwer zresetował połączenie. Szczegóły: {ex.Message}", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                var innerExceptionMessage = ex.InnerException?.Message ?? "Brak dodatkowych informacji";
-                MessageBox.Show($"Serwer zresetował połączenie. Szczegóły: {ex.Message}\nWewnętrzny wyjątek: {innerExceptionMessage}", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Serwer zakończył połączenie z klientem", "Serwer wyłączony", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClientPage.tabControl.SelectedIndex = 0;
+                //var innerExceptionMessage = ex.InnerException?.Message ?? "Brak dodatkowych informacji";
+               // MessageBox.Show($"Serwer zresetował połączenie. Szczegóły: {ex.Message}\nWewnętrzny wyjątek: {innerExceptionMessage}", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
                 //Dispatcher.Invoke(() => { clientStstus.Text = "Status: rozłączony"; });
-                Console.WriteLine("Błąd: " + ex.Message);
+               // Console.WriteLine("Błąd: " + ex.Message);
             }
             //Dispatcher.Invoke(() => { tabControl.SelectedIndex = 0; });
             ClientPage.matrix = null;
@@ -138,14 +138,7 @@ namespace klient_server.Threads
         {
             if (client.Client.Poll(0, SelectMode.SelectRead) && client.Client.Available == 0)
             {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    /*ConnectedClientsRecords.Remove(newCliendRecord);
-                    clients.Remove(client);
-                    clientsStreams.Remove(stream);
-                    connectedClientsCounter--;*/
-                });
-                MessageBox.Show("Utracono połączenie z serwerem", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Serwer zakończył połączenie z klientem", "Serwer wyłączony", MessageBoxButton.OK, MessageBoxImage.Information);
                 return true;
             }
             return false;

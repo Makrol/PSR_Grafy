@@ -3,56 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\threads\\serverthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\threads\\serverthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\grapheditorpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\grapheditorpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\dijkstra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\dijkstra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\returnobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\returnobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\threads\\clientthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\threads\\clientthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\recordstemplates\\resultrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\recordstemplates\\resultrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\recordstemplates\\resultpathrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\recordstemplates\\resultpathrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\serverpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\serverpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\modals\\allresultswindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\modals\\allresultswindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\clientpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\clientpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\serverpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\serverpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\welcomepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\welcomepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\connectionpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\connectionpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\clientpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\clientpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\clientpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\clientpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\threads\\clientthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\threads\\clientthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\pages\\clientlistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\pages\\clientlistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|c:\\users\\karol\\onedrive\\dokumenty\\github\\psr_grafy\\grafy\\klient-server\\recordstemplates\\clientrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2C326E0-4BCD-4ACC-A637-814C52A3C672}|klient-server\\klient-server.csproj|solutionrelative:klient-server\\recordstemplates\\clientrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -61,8 +41,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 234,
-          "SelectedChildIndex": 7,
+          "DockedWidth": 365,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,169 +54,73 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Dijkstra.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Dijkstra.cs",
-              "RelativeDocumentMoniker": "klient-server\\Dijkstra.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Dijkstra.cs",
-              "RelativeToolTip": "klient-server\\Dijkstra.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACwAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T07:19:01.499Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ReturnObject.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\ReturnObject.cs",
-              "RelativeDocumentMoniker": "klient-server\\ReturnObject.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\ReturnObject.cs",
-              "RelativeToolTip": "klient-server\\ReturnObject.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAABZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T07:18:29.359Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ResultRecord.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\RecordsTemplates\\ResultRecord.cs",
-              "RelativeDocumentMoniker": "klient-server\\RecordsTemplates\\ResultRecord.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\RecordsTemplates\\ResultRecord.cs",
-              "RelativeToolTip": "klient-server\\RecordsTemplates\\ResultRecord.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T06:47:30.826Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ResultPathRecord.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\RecordsTemplates\\ResultPathRecord.cs",
-              "RelativeDocumentMoniker": "klient-server\\RecordsTemplates\\ResultPathRecord.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\RecordsTemplates\\ResultPathRecord.cs",
-              "RelativeToolTip": "klient-server\\RecordsTemplates\\ResultPathRecord.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T06:47:30.257Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AllResultsWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Modals\\AllResultsWindow.xaml.cs",
-              "RelativeDocumentMoniker": "klient-server\\Modals\\AllResultsWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Modals\\AllResultsWindow.xaml.cs",
-              "RelativeToolTip": "klient-server\\Modals\\AllResultsWindow.xaml.cs",
-              "ViewState": "AQIAACwBAAAAAAAAAADgv0MBAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T06:26:04.468Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ServerThread.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Threads\\ServerThread.cs",
-              "RelativeDocumentMoniker": "klient-server\\Threads\\ServerThread.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Threads\\ServerThread.cs",
-              "RelativeToolTip": "klient-server\\Threads\\ServerThread.cs",
-              "ViewState": "AQIAACUAAAAAAAAAAAAYwDsAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T06:12:57.927Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ServerPage.xaml",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ServerPage.xaml",
-              "RelativeDocumentMoniker": "klient-server\\Pages\\ServerPage.xaml",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ServerPage.xaml",
-              "RelativeToolTip": "klient-server\\Pages\\ServerPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-17T11:19:07.328Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ClientThread.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Threads\\ClientThread.cs",
-              "RelativeDocumentMoniker": "klient-server\\Threads\\ClientThread.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Threads\\ClientThread.cs",
-              "RelativeToolTip": "klient-server\\Threads\\ClientThread.cs",
-              "ViewState": "AQIAAHAAAAAAAAAAAAAgwIAAAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-17T11:15:25.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "WelcomePage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\WelcomePage.xaml.cs",
-              "RelativeDocumentMoniker": "klient-server\\Pages\\WelcomePage.xaml.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\WelcomePage.xaml.cs",
-              "RelativeToolTip": "klient-server\\Pages\\WelcomePage.xaml.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAowAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-17T11:15:10.158Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "ServerPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ServerPage.xaml.cs",
               "RelativeDocumentMoniker": "klient-server\\Pages\\ServerPage.xaml.cs",
               "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ServerPage.xaml.cs",
               "RelativeToolTip": "klient-server\\Pages\\ServerPage.xaml.cs",
-              "ViewState": "AQIAAG8AAAAAAAAAAAAcwIcAAAAaAAAA",
+              "ViewState": "AQIAAFAAAAAAAAAAAAAwwHYAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-17T11:13:57.102Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GraphEditorPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\GraphEditorPage.xaml.cs",
-              "RelativeDocumentMoniker": "klient-server\\Pages\\GraphEditorPage.xaml.cs",
-              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\GraphEditorPage.xaml.cs",
-              "RelativeToolTip": "klient-server\\Pages\\GraphEditorPage.xaml.cs",
-              "ViewState": "AQIAAJ4AAAAAAAAAAAAowLIAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-17T11:13:37.161Z",
+              "WhenOpened": "2024-06-05T09:55:09.796Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 2,
               "Title": "ConnectionPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ConnectionPage.xaml.cs",
               "RelativeDocumentMoniker": "klient-server\\Pages\\ConnectionPage.xaml.cs",
               "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ConnectionPage.xaml.cs",
               "RelativeToolTip": "klient-server\\Pages\\ConnectionPage.xaml.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-17T11:13:33.071Z"
+              "WhenOpened": "2024-06-05T09:55:02.507Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
+              "Title": "ClientPage.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ClientPage.xaml",
+              "RelativeDocumentMoniker": "klient-server\\Pages\\ClientPage.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ClientPage.xaml",
+              "RelativeToolTip": "klient-server\\Pages\\ClientPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-05T09:53:47.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ClientPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ClientPage.xaml.cs",
               "RelativeDocumentMoniker": "klient-server\\Pages\\ClientPage.xaml.cs",
               "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ClientPage.xaml.cs",
               "RelativeToolTip": "klient-server\\Pages\\ClientPage.xaml.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAcwBUAAAAMAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAowEMAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-17T11:11:25.46Z"
+              "WhenOpened": "2024-06-05T09:17:59.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ClientThread.cs",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Threads\\ClientThread.cs",
+              "RelativeDocumentMoniker": "klient-server\\Threads\\ClientThread.cs",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Threads\\ClientThread.cs",
+              "RelativeToolTip": "klient-server\\Threads\\ClientThread.cs",
+              "ViewState": "AQIAAH4AAAAAAAAAAAAmwIwAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T07:16:09.322Z",
+              "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedWidth": 40,
-          "SelectedChildIndex": -1,
+          "DockedWidth": 103,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -249,6 +133,41 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ClientRecord.cs",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\RecordsTemplates\\ClientRecord.cs",
+              "RelativeDocumentMoniker": "klient-server\\RecordsTemplates\\ClientRecord.cs",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\RecordsTemplates\\ClientRecord.cs",
+              "RelativeToolTip": "klient-server\\RecordsTemplates\\ClientRecord.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAkAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T08:47:37.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ClientListPage.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ClientListPage.xaml",
+              "RelativeDocumentMoniker": "klient-server\\Pages\\ClientListPage.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ClientListPage.xaml",
+              "RelativeToolTip": "klient-server\\Pages\\ClientListPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-05T08:17:33.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServerPage.xaml",
+              "DocumentMoniker": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ServerPage.xaml",
+              "RelativeDocumentMoniker": "klient-server\\Pages\\ServerPage.xaml",
+              "ToolTip": "C:\\Users\\karol\\OneDrive\\Dokumenty\\GitHub\\PSR_Grafy\\Grafy\\klient-server\\Pages\\ServerPage.xaml",
+              "RelativeToolTip": "klient-server\\Pages\\ServerPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-17T11:19:07.328Z",
+              "EditorCaption": ""
             }
           ]
         }

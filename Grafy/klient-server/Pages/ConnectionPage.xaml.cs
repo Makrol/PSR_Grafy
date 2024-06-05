@@ -9,7 +9,7 @@ namespace Grafy_serwer.Pages
 {
     public partial class ConnectionPage : Page
     {
-        private Thread clientThread;
+
         private TabControl tabControl;
 
         public ConnectionPage()
@@ -43,5 +43,6 @@ namespace Grafy_serwer.Pages
         {
             tabControl.SelectedIndex = 0;
         }
+
     }
 }

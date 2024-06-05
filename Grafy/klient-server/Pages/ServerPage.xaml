@@ -42,10 +42,42 @@
             </ListView.View>
 
         </ListView>
+        <Grid Grid.Column="1"  Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="63*"/>
+                <RowDefinition Height="17*"/>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" Source="./ClientListPage.xaml" />
+            <DockPanel Grid.Row="1" Background="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Godzina rozpoczęcia: "/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Text="Godzina zakończemia: "/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Czas trwania: "/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Ilość węzłów: "/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Text="Rozmiar pakietu: "/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="00:00:00.000" x:Name="startTime"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="00:00:00.000" x:Name="endTime"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="00:00:00.000" x:Name="elapsedTime"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="0" x:Name="nodeCounter"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="0" x:Name="nodeInPackageCounter"/>
+                </Grid>
 
-        <Frame Grid.Column="1" Source="./ClientListPage.xaml" Grid.RowSpan="2"/>
+            </DockPanel>
 
-        
+        </Grid>
+
+
         <Border Background="#dedede" Grid.Column="1" Grid.Row="2" >
             <Button x:Name="ServerBackButton" Style="{StaticResource ButtonStyle}" Content="Powrót" Click="Back"/>
         </Border>
@@ -56,7 +88,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="calculationButton" Grid.Column="0" Style="{StaticResource ButtonStyle}" Content="Rozpocznij obliczenia" Click="StartCalculation"/>
-                <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Pokaż wszystkie wyniki" Click="Show_All_Results"/>
+                <Button Grid.Column="1" Style="{StaticResource ButtonStyle}" Content="Pokaż wszystkie wyniki" Click="Show_All_Results" Height="40" Margin="5,5,5,0" VerticalAlignment="Top"/>
             </Grid>
 
         </Border>

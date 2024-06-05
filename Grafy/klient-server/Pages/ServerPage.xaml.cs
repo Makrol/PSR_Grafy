@@ -22,7 +22,7 @@ namespace Grafy_serwer.Pages
     public partial class ServerPage : Page
     {
         private TabControl tabControl;
-        public ObservableCollection<CliendRecord> ConnectedClientsRecords { get; set; }
+       // public ObservableCollection<CliendRecord> ConnectedClientsRecords { get; set; }
         public static ObservableCollection<ResultRecord> ResultsRecords { get; set; }
         private List<NetworkStream> clientsStreams = new List<NetworkStream> ();
         private static List<ReturnObject> returnObjectsList = new List<ReturnObject> ();
@@ -30,13 +30,25 @@ namespace Grafy_serwer.Pages
         public static ServerThread serverT= new ServerThread();
         private static Button runButton;
         private static Button backButton;
+        private static TextBlock startTimeRef;
+        private static TextBlock stopTimeRef;
+        private static TextBlock elapseTimeRef;
+        private static TextBlock nodeCounterRef;
+        private static TextBlock nodeInPackageCounterRef;
+
+        private static DateTime startTimeValue = DateTime.Now;
         public ServerPage()
         {
             InitializeComponent();
-            ConnectedClientsRecords = new ObservableCollection<CliendRecord>();
+            //ConnectedClientsRecords = new ObservableCollection<CliendRecord>();
             ResultsRecords = new ObservableCollection<ResultRecord>();
             //listView.ItemsSource = ConnectedClientsRecords;
             resultListView.ItemsSource = ResultsRecords;
+            startTimeRef = startTime;
+            stopTimeRef = endTime;
+            elapseTimeRef = elapsedTime;
+            nodeCounterRef = nodeCounter;
+            nodeInPackageCounterRef = nodeInPackageCounter;
 
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -63,6 +75,7 @@ namespace Grafy_serwer.Pages
 
         private void StartCalculation(object sender, RoutedEventArgs e)
         {
+            resetTimes();
             ResultsRecords.Clear();
             ServerThread.StartCalculation();
             ClientListPage.resetActionCounters();
@@ -140,10 +153,51 @@ namespace Grafy_serwer.Pages
         private void Back(object sender, RoutedEventArgs e)
         {
             tabControl.SelectedIndex = 1;
+            
         }
         public static void addReturnObjectToList(ReturnObject returnObject)
         {
             returnObjectsList.Add(returnObject);
         }
+        public static void setStartTime()
+        {
+            startTimeValue = DateTime.Now;
+            Application.Current.Dispatcher.Invoke(() => {
+                startTimeRef.Text = startTimeValue.ToString("HH:mm:ss.fff");
+            });
+        }
+        public static void setEndTime()
+        {
+            DateTime endTimeVal = DateTime.Now;
+            Application.Current.Dispatcher.Invoke(() => {
+                stopTimeRef.Text = endTimeVal.ToString("HH:mm:ss.fff");
+                var tmp = endTimeVal - startTimeValue;
+                elapseTimeRef.Text = tmp.ToString(@"hh\:mm\:ss\.fff");
+            });
+        }
+        public static void setNodeCounter(int val)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                nodeCounterRef.Text = val.ToString();
+            });
+        }
+        public static void setNodeInPackageCounter(int val)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                nodeInPackageCounterRef.Text = val.ToString();
+            });
+        }
+        public static void resetTimes()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                stopTimeRef.Text = "00:00:00.000";
+                stopTimeRef.Text = "00:00:00.000";
+                elapseTimeRef.Text = "00:00:00.000";
+            });
+        }
+        
     }
 }

@@ -16,6 +16,7 @@ using System.Text.Json;
 using klient_server.Pages;
 using System.IO;
 using klient_server.Dto;
+using System.Reflection;
 
 namespace klient_server.Threads
 {
@@ -30,6 +31,9 @@ namespace klient_server.Threads
         static object lockPackageGenerator = new object();
         public static AdjacencyMatrix matrix;
         public static int nodeProgres = 0;
+        public static int maxPackets = 0;
+        public static int calculatedPackets = 0;
+        public static object lockCalculatedPackets = new object();
         public ServerThread() 
         {
             thread = new Thread(new ParameterizedThreadStart(threadTask));
@@ -77,6 +81,8 @@ namespace klient_server.Threads
         }
         public static void StartCalculation()
         {
+            ServerPage.setNodeInPackageCounter(0);
+            ServerPage.setNodeCounter(0);
             nodeProgres = 0;
             if (connectedClientsCounter <= 0)
             {
@@ -86,6 +92,7 @@ namespace klient_server.Threads
             GranulationWindow window = new GranulationWindow();
             window.ShowDialog();
             packageSize = window.granulationValue;
+            ServerPage.setNodeInPackageCounter(packageSize);
             if (packageSize != -1)
             {
                // listener.Stop();
@@ -105,7 +112,11 @@ namespace klient_server.Threads
         }
         private static List<SendObject> generateInitSendObjects(int nodeInPackage)
         {
+            
             var nodes = GraphEditorPage.getGrapfNodes();
+            maxPackets = (int)Math.Ceiling((double)nodes.Count/nodeInPackage);
+            ServerPage.setNodeCounter(nodes.Count);
+            calculatedPackets = 0;
             matrix = new AdjacencyMatrix(nodes.Count);
             matrix.generateMatrix(nodes);
             List<SendObject> messages = new List<SendObject>();
@@ -130,19 +141,21 @@ namespace klient_server.Threads
         }
         private static void sendObjectsToAll(List<SendObject> objectsList)
         {
+            
             List<Thread> threads = new List<Thread>();
             for (int i = 0; i < objectsList.Count; i++)
             {
                 Thread thread = new Thread(new ParameterizedThreadStart(initSendThread));
                 thread.Start(new ObjectAndStreamDto(objectsList[i], handleClientList[i].stream) );
             }
+            ServerPage.setStartTime();
         }
         private static void initSendThread(object obj)
         {
             var dtoObject = (ObjectAndStreamDto)obj;
             var serializedData = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(dtoObject.obj));
             dtoObject.stream.Write(serializedData);
-            dtoObject.stream.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));
+            dtoObject.stream.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize("END")));          
         }
         private static void sendObject(SendObject obj, NetworkStream stream)
         {
@@ -159,8 +172,8 @@ namespace klient_server.Threads
             }
             if(objectToSend==null)
             {
-                MessageBox.Show("", "Koniec", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                ServerPage.unlockButtons();
+                //MessageBox.Show("", "Koniec", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                //ServerPage.unlockButtons();
             }
             else
                 sendObject(objectToSend, stream);
